@@ -20,7 +20,9 @@
 ![批量创建DC2云服务器](images/01-dc2-create.png)
 
 购买成功后DC2云服务器列表如下图：
+
 ![DC2列表](images/01-dc2-list.png)
+
 
 
 > 备注：本文实验配置均为4核CPU、8GB内存、200GB存储、5M带宽。
@@ -232,7 +234,12 @@ Status: Downloaded newer image for rancher/rancher:latest
 
 
 ## 第四步：安装Etcd节点与控制节点
+点击【Add Cluster】进入添加集群页面，如下图
 
+
+设置集群名称
+
+【Node Options】中只勾选【Etcd】
 
 ## 第五步：安装工作节点
 
