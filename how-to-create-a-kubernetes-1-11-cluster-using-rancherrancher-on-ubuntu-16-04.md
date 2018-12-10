@@ -133,9 +133,92 @@ sudo apt-get install -y docker-ce
 ```
 sudo curl -fsSL https://get.docker.com/ | sh
 ```
+设置开机自动启动
+```
+$ sudo systemctl enable docker.service
+$ sudo systemctl daemon-reload
+$ sudo service docker restart
+```
+
+检查安装
+```
+$ sudo service docker status
+```
+```
+OUTPUT
+
+● docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: active (running) since Mon 2018-11-26 00:41:59 CST; 2 weeks 0 days ago
+     Docs: https://docs.docker.com
+ Main PID: 5509 (dockerd)
+    Tasks: 19
+   Memory: 2.2G
+      CPU: 5h 57min 9.624s
+   CGroup: /system.slice/docker.service
+           └─5509 /usr/bin/dockerd -H unix://
+
+Warning: Journal has been rotated since unit was started. Log output is incomplete or unavailable.
+```
+
+每次重启Docker后，可以通过查看Docker信息确保服务已经正常运行
+```
+sudo docker version
+```
+```
+OUTPUT
+
+Client:
+ Version:           18.09.0
+ API version:       1.39
+ Go version:        go1.10.4
+ Git commit:        4d60db4
+ Built:             Wed Nov  7 00:48:57 2018
+ OS/Arch:           linux/amd64
+ Experimental:      false
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          18.09.0
+  API version:      1.39 (minimum version 1.12)
+  Go version:       go1.10.4
+  Git commit:       4d60db4
+  Built:            Wed Nov  7 00:16:44 2018
+  OS/Arch:          linux/amd64
+  Experimental:     false
+```
+
 
 
 ## 第三步：安装rancher
+安装和运行Rancher Server,运行如下命令会从Docker Hub仓库中拉取rancher镜像并完成安装
+```
+sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
+```
+```
+OUTPUT
+
+Unable to find image 'rancher/rancher:latest' locally
+latest: Pulling from rancher/rancher
+32802c0cfa4d: Pull complete 
+da1315cffa03: Pull complete 
+fa83472a3562: Pull complete 
+f85999a86bef: Pull complete 
+802918c3c5d1: Pull complete 
+941c9d7db7cb: Pull complete 
+a00bebfc6f0e: Pull complete 
+0a145b822324: Pull complete 
+1cd1020104e1: Pull complete 
+03f3b0fc5689: Pull complete 
+07054e1590fd: Pull complete 
+db38f96efb72: Pull complete 
+Digest: sha256:b5762180fdc05b5be8337453cc9bbadc33645d50cd8d2dac89c6676bf07460b7
+Status: Downloaded newer image for rancher/rancher:latest
+87e6362368f4c0903d390c07be08636684d568f6cc32dca9ff5edc3a3584fb55
+
+```
+在本地主机打开浏览器，输入rancher访问地址：https://dc2公网IP， 如本案例中安装rancher server的DC2云服务器公网IP地址为`16.85.5.250`,所以rancher管理界面的访问地址为https://16.85.5.250, 如下图：
+
 
 
 ## 第四步：安装Etcd节点与控制节点
