@@ -217,7 +217,17 @@ Status: Downloaded newer image for rancher/rancher:latest
 87e6362368f4c0903d390c07be08636684d568f6cc32dca9ff5edc3a3584fb55
 
 ```
-在本地主机打开浏览器，输入rancher访问地址：https://dc2公网IP， 如本案例中安装rancher server的DC2云服务器公网IP地址为`16.85.5.250`,所以rancher管理界面的访问地址为https://16.85.5.250, 如下图：
+在本地主机打开浏览器，输入rancher访问地址：https://dc2公网IP， 如本案例中安装rancher server的DC2云服务器公网IP地址为`116.85.13.192`,所以rancher管理界面的访问地址为https://116.85.13.192, 如下图：
+
+
+点击继续
+
+设置管理密码
+
+
+保存url地址
+
+进入rancher server管理控制台
 
 
 
