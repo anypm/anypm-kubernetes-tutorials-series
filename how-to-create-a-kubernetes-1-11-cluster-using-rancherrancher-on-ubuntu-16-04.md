@@ -219,25 +219,24 @@ Status: Downloaded newer image for rancher/rancher:latest
 
 ```
 在本地主机打开浏览器，输入rancher访问地址：https://dc2公网IP， 如本案例中安装rancher server的DC2云服务器公网IP地址为`116.85.13.192`,所以rancher管理界面的访问地址为https://116.85.13.192, 如下图：
-> 添加图片
-
+![安全连接]03-connect-adv.png
 
 点击继续
-> 添加图片
+![继续]04-connect-continue.png
 
 设置管理密码
-> 添加图片
+![设置管理密码]05-rancher-setpwd.png
 
 保存url地址
-> 添加图片
+![保存访问url地址]06-rancher-saveurl.png
 
 进入rancher server管理控制台
-> 添加图片
+![rancher server管理控制台]07-rancher-empty.png
 
 
 ## 第四步：安装Etcd节点与控制节点
 点击【Add Cluster】进入添加集群页面，如下图
-> 添加图片
+![添加集群]08-rancher-clustername.png
 
 设置集群名称
 
@@ -247,14 +246,13 @@ Status: Downloaded newer image for rancher/rancher:latest
 * 【Node Options】-【Node Name】中填写Etcd云服务器的名称，如示例中的：`kubernetes-etcd-x`
 
 设置效果如下图：
-> 添加图片
+![设置Etcd]09-rancher-etcd.png
 
-下方会自动生成Etcd节点的配置命令，如下图：
+下方会自动生成Etcd节点的配置命令：
 ```
 sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.1.1 --server https://116.85.13.192 --token kcfhmzmtqhbm7lvhkcbmk5zrfdqd4mjrtqxh7684xzbsmcblp7kpmw --ca-checksum 8b256294489a4230cd34035520e790dc5fbc9541f80c28dfb7b1f8f1d16eecfe --node-name kubernetes-etcd-x --address 116.85.5.250 --internal-address 10.10.73.109 --etcd
 
 ```
-> 添加图片
 
 复制配置命令到Ectd云服务器终端并运行,输出如下：
 ```
@@ -275,9 +273,9 @@ Digest: sha256:2236b44b39bf0c2ae2f5c158f2516e3c89c85f8fa664fa3315b3effe66e63395
 Status: Downloaded newer image for rancher/rancher-agent:v2.1.1
 303f78d58a7d312a9444832f0536d9ce426c007aba9c24a7488f15fbc1eb0b90
 ```
-Etcd节点安装完成后会自动连接到Rancher管理服务器，管理控制台中会提示`1 new node has registered`，效果如下图：
+Etcd节点安装完成后会自动连接到Rancher管理服务器，管理控制台底部会提示`1 new node has registered`。
 
-> 添加图片
+
 
 同样的步骤安装控制节点：
 * 【Node Options】-【Node Role】中只勾选【Control Plane】
@@ -286,14 +284,13 @@ Etcd节点安装完成后会自动连接到Rancher管理服务器，管理控制
 * 【Node Options】-【Node Name】中填写Control Plane云服务器的名称，如示例中的：`kubernetes-controller-x`
 
 设置效果如下图：
-> 添加图片
+![设置ctlplane]10-rancher-ctlplane.png
 
-下方会自动生成Control Plane节点的配置命令，如下图：
+下方会自动生成Control Plane节点的配置命令：
 ```
 sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.1.1 --server https://116.85.13.192 --token kcfhmzmtqhbm7lvhkcbmk5zrfdqd4mjrtqxh7684xzbsmcblp7kpmw --ca-checksum 8b256294489a4230cd34035520e790dc5fbc9541f80c28dfb7b1f8f1d16eecfe --node-name kubernetes-controller-x --address 116.85.10.134 --internal-address 10.10.169.63 --controlplane
 
 ```
-> 添加图片
 
 复制配置命令到Control Plane云服务器终端并运行,输出如下：
 ```
@@ -314,9 +311,7 @@ Digest: sha256:2236b44b39bf0c2ae2f5c158f2516e3c89c85f8fa664fa3315b3effe66e63395
 Status: Downloaded newer image for rancher/rancher-agent:v2.1.1
 bdd468b2552aba5db0e5bdd6b10d0f3b44872f0bbbe7292864dac69ea134ad4e
 ```
-Control Plane节点安装完成后会自动连接到Rancher管理服务器，管理控制台中会提示`2 new node has registered`，效果如下图：
-
-> 添加图片
+Control Plane节点安装完成后会自动连接到Rancher管理服务器，管理控制台底部会提示`2 new node has registered`
 
 
 ## 第五步：安装工作节点
@@ -327,14 +322,13 @@ Control Plane节点安装完成后会自动连接到Rancher管理服务器，管
 * 【Node Options】-【Node Name】中填写第一台工作节点云服务器的名称，如示例中的：`kubernetes-worker01-x`
 
 设置效果如下图：
-> 添加图片
+![设置worker1]11-rancher-worker1.png
 
-下方会自动生成工作节点的配置命令，如下图：
+下方会自动生成工作节点的配置命令：
 ```
 sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.1.1 --server https://116.85.13.192 --token kcfhmzmtqhbm7lvhkcbmk5zrfdqd4mjrtqxh7684xzbsmcblp7kpmw --ca-checksum 8b256294489a4230cd34035520e790dc5fbc9541f80c28dfb7b1f8f1d16eecfe --node-name kubernetes-worker01-x --address 116.85.5.252 --internal-address 10.10.37.29 --worker
 
 ```
-> 添加图片
 
 复制配置命令到`Worker1`云服务器终端并运行,输出如下：
 ```
@@ -355,10 +349,7 @@ Digest: sha256:2236b44b39bf0c2ae2f5c158f2516e3c89c85f8fa664fa3315b3effe66e63395
 Status: Downloaded newer image for rancher/rancher-agent:v2.1.1
 638a0126b7a06138d463c08d4e41d37c65b546ef5dddca0619b065519e442acc
 ```
-`Worker1`节点安装完成后会自动连接到Rancher管理服务器，管理控制台中会提示`3 new node has registered`，效果如下图：
-
-> 添加图片
-
+`Worker1`节点安装完成后会自动连接到Rancher管理服务器，管理控制台底部会提示`3 new node has registered`
 
 重复如上步骤安装**第二个工作节点**，详情如下：
 * 【Node Options】-【Node Role】中只勾选【Worker】
@@ -367,14 +358,13 @@ Status: Downloaded newer image for rancher/rancher-agent:v2.1.1
 * 【Node Options】-【Node Name】中填写第二台工作节点云服务器的名称，如示例中的：`kubernetes-worker02-x`
 
 设置效果如下图：
-> 添加图片
+![设置worker2]12-rancher-worker2.png
 
-下方会自动生成工作节点的配置命令，如下图：
+下方会自动生成工作节点的配置命令：
 ```
 sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.1.1 --server https://116.85.13.192 --token kcfhmzmtqhbm7lvhkcbmk5zrfdqd4mjrtqxh7684xzbsmcblp7kpmw --ca-checksum 8b256294489a4230cd34035520e790dc5fbc9541f80c28dfb7b1f8f1d16eecfe --node-name kubernetes-worker02-x --address 116.85.37.182 --internal-address 10.10.124.220 --worker
 
 ```
-> 添加图片
 
 复制配置命令到`Worker2`云服务器终端并运行,输出如下：
 ```
@@ -395,9 +385,7 @@ Digest: sha256:2236b44b39bf0c2ae2f5c158f2516e3c89c85f8fa664fa3315b3effe66e63395
 Status: Downloaded newer image for rancher/rancher-agent:v2.1.1
 909549bc0d6035a9df4d68cbe51406da76c3e17e1d633d541dca0c82a06dc69d
 ```
-`Worker2`节点安装完成后会自动连接到Rancher管理服务器，管理控制台中会提示`4 new node has registered`，效果如下图：
-
-> 添加图片
+`Worker2`节点安装完成后会自动连接到Rancher管理服务器，管理控制台底部会提示`4 new node has registered`
 
 至此，Kubernetes集群所有节点均已成功安装，点击【Done】完成集群设置即可。
 
