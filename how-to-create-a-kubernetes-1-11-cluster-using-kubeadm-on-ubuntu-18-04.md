@@ -1,11 +1,10 @@
-# 如何在Ubuntu 18.04上使用Kubeadm创建Kubernetes 1.11集群
+# 如何在Ubuntu 16.04上使用Kubeadm创建Kubernetes 1.11集群
 
 ## 介绍
-Kubernetes是一个容器编排系统，可以大规模管理容器。Kubernetes最初由谷歌根据其在生产中运行容器的经验开发而成，是一个开源的，并由世界各地的社区积极开发。
+Kubernetes是一个容器编排系统，可以大规模管理容器。Kubernetes最初由谷歌根据其在生产中运行容器的经验开发而成，是一个由世界各地开发者积极参与的社区开发并提供支持的开源平台。
+Kubeadm自动安装和配置Kubernetes组件，如API Server组件、Controller Manager组件和Kube DNS组件等。但是，它不会创建用户或处理操作系统级依赖关系的安装及其配置。对于这些初级任务，可以使用Ansible或SaltStack等配置管理工具。使用这些工具可以更轻松地创建其他集群或重新创建现有集群，并且不易出错。
 
-Kubeadm自动安装和配置Kubernetes组件，例如API服务器，Controller Manager和Kube DNS。但是，它不会创建用户或处理操作系统级依赖关系及其配置的安装。对于这些初步任务，可以使用Ansible或SaltStack等配置管理工具。使用这些工具可以更轻松地创建其他集群或重新创建现有集群，并且不易出错。
-
-在本指南中，您将使用Ansible和Kubeadm从头开始设置Kubernetes集群，然后将容器化的Nginx应用程序部署到它。
+在本指南中，您将使用Ansible和Kubeadm从头开始设置Kubernetes集群，然后将容器化的Nginx应用程序在集群上部署。
 
 
 ## 目标
@@ -13,43 +12,41 @@ Kubeadm自动安装和配置Kubernetes组件，例如API服务器，Controller M
 您的群集将包含以下物理资源：
 
 * 一个Master节点
-主节点（Kubernetes中的节点指服务器）负责管理集群的状态。它运行Etcd，它在将工作负载调度到工作节点的组件之间存储集群数据。
+Master节点（Kubernetes中的节点指服务器）负责管理集群的状态。它运行Etcd，它用来存储将工作负载调度到Worker节点的组件之间的集群数据。
 
 
 * 两个Worker节点
-工作节点是运行工作负载（即容器化应用程序和服务）的服务器。一旦工作人员分配了工作负载，工作人员将继续运行您的工作负载，即使主计划在调度完成后停止工作也是如此。通过添加工作人员可以增加群集的容量。
+Worker节点是运行工作负载（即容器化应用程序和服务）的服务器。一旦Worker节点分配了工作负载，Worker节点将持续运行该工作负载，即使Master节点在调度完成后停止工作也是如此。通过添加Worker节点可以对集群扩容。
 
 
-完成本指南后，您将拥有一个可以运行容器化应用程序的集群，前提是集群中的服务器具有足够的CPU和RAM资源供应用程序使用。几乎任何传统的Unix应用程序（包括Web应用程序，数据库，守护程序和命令行工具）都可以进行容器化，并在集群上运行。群集本身将在每个节点上消耗大约300-500MB的内存和10％的CPU。
+完成本指南后，您将拥有一个可以运行容器化应用程序的集群，前提是集群中的服务器具有足够的CPU和内存资源供应用程序使用。几乎任何传统的Unix应用程序（包括Web应用程序，数据库，守护程序和命令行工具）都可以进行容器化，并在集群上运行。集群本身将在每个节点上消耗大约300-500MB的内存和10％的CPU。
 
-设置群集后，您将部署Web服务器Nginx以确保它正确运行工作负载。
+设置群集后，您将部署Web服务Nginx以确认它正确运行工作负载。
 
 
 ## 先决条件
 
-* 本地Linux / macOS / BSD计算机上的SSH密钥对。如果您之前没有使用过SSH密钥，可以按照如何在本地计算机上设置SSH密钥的说明来学习如何设置它们。
-* 运行Ubuntu 16.04且内存至少为1GB的三台服务器。您应该能够以SSH密钥对的root用户身份SSH到每个服务器。
-* Ansible安装在您的本地计算机上。如果您正在运行Ubuntu 18.04作为您的操作系统，请按照如何在Ubuntu 18.04上安装和配置Ansible中的“步骤1 - 安装Ansible”部分来安装Ansible。有关其他平台（如macOS或CentOS）的安装说明，请遵循Ansible官方安装文档。
-* 熟悉Ansible剧本。有关查看，请查看配置管理101：编写Ansible Playbooks。
-* 了解如何从Docker镜像启动容器。如果需要复习，请参阅如何在Ubuntu 18.04上安装和使用Docker中的“步骤5 - 运行Docker容器” 。
+* (可选)本地Linux / macOS / BSD计算机上的SSH密钥对。如果您之前没有使用过SSH密钥，可以按照如何在本地计算机上设置SSH密钥的说明来学习如何设置它们。
+* 运行Ubuntu 16.04且内存至少为1GB的三台滴滴云服务器。您应该能够以密码连接或者SSH密钥对的root用户身份SSH连接到每个DC2服务器。
+* Ansible安装在您的本地计算机上。如果您正在运行Ubuntu 16.04作为您的操作系统，请按照如何在Ubuntu 16.04上安装和配置Ansible中的“步骤1 - 安装Ansible”部分来安装Ansible。
+* 了解如何从Docker镜像启动容器。如果需要复习，请参阅如何在Ubuntu 16.04上安装和使用Docker中的“步骤5 - 运行Docker容器” 。
 
-## 第1步 - 设置工作区目录和Ansible清单文件
-
+## 第1步 - 设置工作区目录和Ansible Inventory文件
 
 在本节中，您将在本地计算机上创建一个用作工作区的目录。您将在本地配置Ansible，以便它可以与远程服务器上的命令进行通信并执行命令。完成后，您将创建一个hosts包含库存信息的文件，例如服务器的IP地址和每个服务器所属的组。
 
-在三台服务器中，一台服务器将显示为主服务器`master_ip`。另外两台服务器将是工作人员，并拥有IP `worker_1_ip`和`worker_2_ip`。
+在三台服务器中，一台主节点服务器IP显示`master_ip`。另外两台服务器将是Worker节点，IP为 `worker_1_ip`和`worker_2_ip`。
 
-创建一个`~/kube-cluster`在本地计算机的主目录中指定的目录并cd进入该目录：
+在本地计算机的home目录下创建一个名为`~/kube-cluster`的目录并执行`cd`进入该目录：
 
 ```
 $ mkdir ~/kube-cluster
 $ cd ~/kube-cluster
 ```
 
-该目录将是本教程其余部分的工作区，并包含所有Ansible剧本。它也将是您将在其中运行所有本地命令的目录。
+该目录将是本教程其余部分的工作区，该目录还包含所有Ansible playbooks,您也将在该目录中运行所有本地命令。
 
-创建一个名为`~/kube-cluster/hosts`using `nano`或您喜欢的文本编辑器的文件：
+用`nano`或您喜欢的文本编辑器(如`vim`)创建一个名为`~/kube-cluster/hosts`的文件：
 
 ```
 $ nano ~/kube-cluster/hosts
@@ -71,7 +68,7 @@ worker2 ansible_host=worker_2_ip ansible_user=root
 ansible_python_interpreter=/usr/bin/python3
 ```
 
-您可能还记得Ansible中的库存文件用于指定服务器信息，例如IP地址，远程用户和服务器分组，以作为执行命令的单个单元进行目标。~/kube-cluster/hosts将是您的库存文件，并且您已向其添加了两个Ansible组（主服务器和工作服务器），用于指定集群的逻辑结构。
+Ansible中的库存文件用于指定服务器信息，例如IP地址、远程用户和服务器分组，以作为执行命令的单个单元。~/kube-cluster/hosts将是您的库存文件，并且您已向其添加了两个Ansible组（主服务器和工作服务器），用于指定集群的逻辑结构。
 
 
 在主服务器组中，有一个名为“master”的服务器条目，其中列出了主节点的IP（`master_ip`），并指定Ansible应以root用户身份运行远程命令。
