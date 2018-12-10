@@ -219,25 +219,25 @@ Status: Downloaded newer image for rancher/rancher:latest
 
 ```
 在本地主机打开浏览器，输入rancher访问地址：https://dc2公网IP， 如本案例中安装rancher server的DC2云服务器公网IP地址为`116.85.13.192`,所以rancher管理界面的访问地址为https://116.85.13.192, 如下图：
-![安全连接]03-connect-adv.png
+![安全连接](03-connect-adv.png)
 
 点击继续
-![继续]04-connect-continue.png
+![继续](04-connect-continue.png)
 
 设置管理密码
-![设置管理密码]05-rancher-setpwd.png
+![设置管理密码](05-rancher-setpwd.png)
 
 保存url地址
-![保存访问url地址]06-rancher-saveurl.png
+![保存访问url地址](06-rancher-saveurl.png)
 
 进入rancher server管理控制台
-![rancher server管理控制台]07-rancher-empty.png
+![rancher server管理控制台](07-rancher-empty.png)
 
 
 ## 第四步：安装Etcd节点与控制节点
 点击【Add Cluster】进入添加集群页面，设置集群名称，如下图
 
-![添加集群]08-rancher-clustername.png
+![添加集群](08-rancher-clustername.png)
 
 设置Etcd节点选项
 
@@ -248,7 +248,7 @@ Status: Downloaded newer image for rancher/rancher:latest
 
 设置效果如下图：
 
-![设置Etcd]09-rancher-etcd.png
+![设置Etcd](09-rancher-etcd.png)
 
 下方会自动生成Etcd节点的配置命令：
 ```
@@ -287,7 +287,7 @@ Etcd节点安装完成后会自动连接到Rancher管理服务器，管理控制
 
 设置效果如下图：
 
-![设置ctlplane]10-rancher-ctlplane.png
+![设置ctlplane](10-rancher-ctlplane.png)
 
 下方会自动生成Control Plane节点的配置命令：
 ```
@@ -326,7 +326,7 @@ Control Plane节点安装完成后会自动连接到Rancher管理服务器，管
 
 设置效果如下图：
 
-![设置worker1]11-rancher-worker1.png
+![设置worker1](11-rancher-worker1.png)
 
 下方会自动生成工作节点的配置命令：
 ```
@@ -363,7 +363,7 @@ Status: Downloaded newer image for rancher/rancher-agent:v2.1.1
 
 设置效果如下图：
 
-![设置worker2]12-rancher-worker2.png
+![设置worker2](12-rancher-worker2.png)
 
 下方会自动生成工作节点的配置命令：
 ```
