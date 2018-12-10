@@ -45,7 +45,6 @@ $ cd ~/kube-cluster
 
 ```
 $ nano ~/kube-cluster/hosts
-
 ```
 
 将以下文本添加到文件中，该文件将指定有关集群逻辑结构的信息：
@@ -85,7 +84,6 @@ ansible_python_interpreter=/usr/bin/python3
 
 ```
 $ nano ~/kube-cluster/initial.yml
-
 ```
 
 接下来，将以下播放添加到该文件以创建在所有服务器上具有sudo权限的非root用户。Ansible中的游戏是针对特定服务器和组执行的一系列步骤。以下播放将创建一个非root sudo用户：
@@ -109,8 +107,6 @@ $ nano ~/kube-cluster/initial.yml
       authorized_key: user=ubuntu key="{{item}}"
       with_file:
         - ~/.ssh/id_rsa.pub
-
-
 ```
 
 这是这个剧本的作用细分：
@@ -128,7 +124,6 @@ ansible-playbook -i hosts ~/kube-cluster/initial.yml
 
 ```
 该命令将在两到五分钟内完成。完成后，您将看到类似于以下内容的输出：
-
 ```
 Output
 PLAY [all] ****
@@ -157,7 +152,6 @@ PLAY RECAP ****
 master                     : ok=5    changed=4    unreachable=0    failed=0   
 worker1                    : ok=5    changed=4    unreachable=0    failed=0   
 worker2                    : ok=5    changed=4    unreachable=0    failed=0   
-
 ```
 
 现在初步设置已完成，您可以继续安装特定于Kubernetes的依赖项。
@@ -175,10 +169,7 @@ worker2                    : ok=5    changed=4    unreachable=0    failed=0
 创建`~/kube-cluster/kube-dependencies.yml`工作空间中指定的文件：
 
 ```
-
 $ nano ~/kube-cluster/kube-dependencies.yml
-
-
 ```
 
 将以下播放添加到文件以将这些包安装到您的服务器：
@@ -229,7 +220,6 @@ $ nano ~/kube-cluster/kube-dependencies.yml
      apt:
        name: kubectl
        state: present
-
 ```
 
 剧本中的第一部戏剧如下：
@@ -248,7 +238,6 @@ $ nano ~/kube-cluster/kube-dependencies.yml
 
 ```
 $ ansible-playbook -i hosts ~/kube-cluster/kube-dependencies.yml
-
 ```
 
 完成后，您将看到类似于以下内容的输出：
@@ -304,7 +293,6 @@ PLAY RECAP ****
 master                     : ok=9    changed=5    unreachable=0    failed=0   
 worker1                    : ok=7    changed=5    unreachable=0    failed=0  
 worker2                    : ok=7    changed=5    unreachable=0    failed=0  
-
 ```
 
 执行后，码头工人，`kubeadm`和`kubelet`将在所有远程服务器的安装。kubectl不是必需组件，仅用于执行集群命令。在此上下文中仅在主节点上安装它是有意义的，因为您将仅从主节点运行`kubectl`命令。但请注意，`kubectl`命令可以从任何工作节点运行，也可以从可以安装和配置为指向集群的任何计算机运行。
@@ -327,7 +315,6 @@ pod是运行一个或多个容器的原子单元。这些容器共享资源，�
 
 ```
 $ nano ~/kube-cluster/master.yml
-
 ```
 
 将以下播放添加到文件中以初始化集群并安装Flannel：
@@ -381,7 +368,6 @@ $ nano ~/kube-cluster/master.yml
 
 ```
 $ ansible-playbook -i hosts ~/kube-cluster/master.yml
-
 ```
 
 完成后，您将看到类似于以下内容的输出：
@@ -408,21 +394,18 @@ changed: [master]
 
 PLAY RECAP ****
 master                     : ok=5    changed=4    unreachable=0    failed=0  
-
 ```
 
 要检查主节点的状态，请使用以下命令通过SSH连接到该节点：
 
 ```
 $ ssh ubuntu@master_ip
-
 ```
 
 进入主节点后，执行：
 
 ```
 $ kubectl get nodes
-
 ```
 您现在将看到以下输出：
 
@@ -444,7 +427,6 @@ master    Ready     master    1d        v1.11.1
 
 ```
 nano ~/kube-cluster/workers.yml
-
 ```
 
 将以下文本添加到文件中以将工作程序添加到集群：
@@ -485,7 +467,6 @@ nano ~/kube-cluster/workers.yml
 通过本地运行执行playbook：
 ```
 $ ansible-playbook -i hosts ~/kube-cluster/workers.yml
-
 ```
 完成后，您将看到类似于以下内容的输出：
 ```
@@ -526,14 +507,12 @@ worker2                    : ok=2    changed=1    unreachable=0    failed=0
 
 ```
 $ ssh ubuntu@master_ip
-
 ```
 
 然后执行以下命令以获取集群的状态：
 
 ```
 $ kubectl get nodes
-
 ```
 
 您将看到类似于以下内容的输出：
@@ -564,7 +543,6 @@ worker2   Ready     <none>    1d        v1.11.1
 
 ```
 $ kubectl run nginx --image=nginx --port 80
-
 ```
 
 部署是一种Kubernetes对象，可确保始终根据定义的模板运行指定数量的pod，即使pod在群集生命周期内崩溃也是如此。上面的部署将使用Docker注册表的Nginx Docker Image创建一个包含一个容器的pod 。
@@ -573,7 +551,6 @@ $ kubectl run nginx --image=nginx --port 80
 
 ```
 $ kubectl expose deploy nginx --port 80 --target-port 80 --type NodePort
-
 ```
 
 服务是另一种类型的Kubernetes对象，它向内部和外部客户端公开集群内部服务。它们还能够对多个pod进行负载均衡请求，并且是Kubernetes中不可或缺的组件，经常与其他组件交互。
@@ -582,7 +559,6 @@ $ kubectl expose deploy nginx --port 80 --target-port 80 --type NodePort
 
 ```
 $ kubectl get services
-
 ```
 这将输出类似于以下内容的文本：
 
@@ -600,14 +576,12 @@ nginx        NodePort    10.109.228.209   <none>                80:nginx_port/TC
 
 ```
 $ kubectl delete service nginx
-
 ```
 
 运行以下命令以确保已删除该服务：
 
 ```
 $ kubectl get services
-
 ```
 
 您将看到以下输出：
@@ -621,14 +595,12 @@ kubernetes   ClusterIP   10.96.0.1        <none>                443/TCP        1
 
 ```
 $ kubectl delete deployment nginx
-
 ```
 
 运行以下命令以确认这是否有效：
 
 ```
 $ kubectl get deployments
-
 ```
 ```
 Output
