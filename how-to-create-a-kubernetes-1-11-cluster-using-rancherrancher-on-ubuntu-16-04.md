@@ -17,11 +17,11 @@
 
 登陆滴滴云批量创建云服务器，如下图：
 
-![批量创建DC2云服务器](images/01-dc2-create.png)
+![批量创建DC2云服务器](01-dc2-create.png)
 
 购买成功后DC2云服务器列表如下图：
 
-![DC2列表](images/01-dc2-list.png)
+![DC2列表](01-dc2-list.png)
 
 
 
