@@ -1,5 +1,13 @@
 # 如何在Ubuntu 18.04上使用Kubeadm创建Kubernetes 1.11集群
 
+## 介绍
+Kubernetes是一个容器编排系统，可以大规模管理容器。Kubernetes最初由谷歌根据其在生产中运行容器的经验开发而成，是一个开源的，并由世界各地的社区积极开发。
+
+Kubeadm自动安装和配置Kubernetes组件，例如API服务器，Controller Manager和Kube DNS。但是，它不会创建用户或处理操作系统级依赖关系及其配置的安装。对于这些初步任务，可以使用Ansible或SaltStack等配置管理工具。使用这些工具可以更轻松地创建其他集群或重新创建现有集群，并且不易出错。
+
+在本指南中，您将使用Ansible和Kubeadm从头开始设置Kubernetes集群，然后将容器化的Nginx应用程序部署到它。
+
+
 ## 目标
 
 您的群集将包含以下物理资源：
