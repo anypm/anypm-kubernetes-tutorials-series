@@ -1,5 +1,7 @@
 # 如何使用Rancher创建Kubernetes集群并进行可视化多集群管理
 
+> 写在前面：本文是[《kubernetes tutorials》](https://github.com/anypm/kubernetes-tutorials-series)系列文章的第一篇，本文的一个重要目的是帮助您如何使用rancher从零开始搭建一个kubernetes集群，并初步了解多集群可视化管理。[《kubernetes tutorials》](https://github.com/anypm/kubernetes-tutorials-series)系列后续还会陆续推出更多相关系列文章详细介绍更丰富的kubernetes安装部署、集群管理实践与原理解析，尽情期待
+
 ## 介绍
 Kubernetes是容器集群管理系统，是一个开源的平台，可以实现容器集群的自动化部署、自动扩缩容、维护等功能。
 
@@ -531,6 +533,4 @@ PV 和 PVC 使得 Kubernetes 集群具备了存储的逻辑抽象能力，使得
 
 Ingress 是授权入站连接到达集群服务的规则集合。你可以通过 Ingress 配置提供外部可访问的 URL、负载均衡、SSL、基于名称的虚拟主机等。用户通过 POST Ingress 资源到 API server 的方式来请求 Ingress。 Ingress controller 负责实现 Ingress，通常使用负载均衡器，它还可以配置边界路由和其他前端，这有助于以 HA 方式处理流量。
 
-
-> 写在后面：本文是[《kubernetes tutorials》](https://github.com/anypm/kubernetes-tutorials-series)系列文章的第一篇，本文的一个重要目的是帮助您如何使用rancher从零开始搭建一个kubernetes集群，并初步了解多集群可视化管理。[《kubernetes tutorials》](https://github.com/anypm/kubernetes-tutorials-series)系列后续还会陆续推出更多相关系列文章详细介绍更丰富的kubernetes安装部署、集群管理实践与原理解析，尽情期待
 
