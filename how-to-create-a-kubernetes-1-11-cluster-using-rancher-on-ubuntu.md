@@ -1,19 +1,60 @@
-# 如何在Ubuntu 16.04上使用Rancher创建Kubernetes 1.11集群
+# 如何在Ubuntu上使用Rancher创建Kubernetes 1.11集群
 
 ## 介绍
+Kubernetes是容器集群管理系统，是一个开源的平台，可以实现容器集群的自动化部署、自动扩缩容、维护等功能。
 
+通过Kubernetes你可以：
+
+快速部署应用
+快速扩展应用
+无缝对接新的应用功能
+节省资源，优化硬件资源的使用
+我们的目标是促进完善组件和工具的生态系统，以减轻应用程序在公有云或私有云中运行的负担。
+
+### Kubernetes 特点
+可移植: 支持公有云，私有云，混合云，多重云（multi-cloud）
+可扩展: 模块化, 插件化, 可挂载, 可组合
+自动化: 自动部署，自动重启，自动复制，自动伸缩/扩展
+Kubernetes是Google 2014年创建管理的，是Google 10多年大规模容器管理技术Borg的开源版本。
+
+### 常见的创建Kubernetes集群的方式有
+* [使用Kubeadm创建Kubernetes集群](https://github.com/anypm/kubernetes-tutorials-series/blob/master/how-to-create-a-kubernetes-1-11-cluster-using-kubeadm-on-ubuntu-18-04.md)
+* 使用Kubemini创建Kubernetes集群
+* 使用RKE创建Kubernetes集群
+* 使用Rancher创建Kubrnetes集群
+
+本文主要讲述**如何使用Rancher创建Kubernetes集群并进行可视化的集群管理**。
+
+### Rancher创建与管理Kubernetes集群的主要优势
+
+Rancher是一套容器管理平台，它可以帮助组织在生产环境中轻松快捷的部署和管理容器。 Rancher可以轻松地管理各种环境的Kubernetes，满足IT需求并为DevOps团队提供支持。
+
+* 企业级容器管理平台
+Rancher是业界唯一完全开源的企业级容器管理平台，为企业用户提供在生产环境中落地使用容器所需的一切功能与组件。Rancher2.0基于Kubernetes构建。使用Rancher，DevOps团队可以轻松测试、部署和管理应用程序，运维团队可以部署、管理和维护一切Kubernetes集群，无论集群运行在何基础设施之上。
+
+* 多集群管理
+Rancher可以更方便的管理Kubernetes集群，它可以从头开始轻松部署新集群，甚至可以导入现有的Kubernetes集群。
+
+* 统一运营管理
+对于Rancher，运营团队在开发，测试和生产Kubernetes集群中拥有相同的部署和管理工具。
 
 
 ## 目标
+集群包含以下资源
 
+* 1个Rancher节点：
+* 1个Etcd节点：
+* 1个控制(Controller)节点：
+* 2个工作(Worker)节点：
+
+完成本指南后您将学会如何安装Docker环境、搭建Rancher集群管理环境、使用Rancher创建Kubernetes环境和使用Rancher进行多集群管理
+
+> 注意：配置推荐至少2核CPU、4GB内存、40GB存储、2M带宽，系统均为Ubuntu 16.04 LTS。为达到更好的效果，本文创建的5台云服务器配置均为4核CPU、8GB内存、200GB存储、5M带宽，系统选择Ubuntu 16.04 LTS。
 
 
 ## 第一步：购买滴滴云服务器
 登陆[滴滴云控制台](https://app.didiyun.com/#/auth/signin?channel=0&return_to=https%3A%2F%2Fwww.didiyun.com%2F)购买**5台**滴滴云服务器(如果需要完成试验后即删除可以购买按时长配置)，配置推荐至少2核CPU、4GB内存、40GB存储、2M带宽，系统均为Ubuntu 16.04 LTS。5台服务器作用如下：
-* Rancher节点：1台。
-* Etcd节点：1台。
-* 控制节点：1台。
-* 工作节点：2台。
+
 
 登陆滴滴云批量创建云服务器，如下图：
 
@@ -24,7 +65,7 @@
 ![DC2列表](02-dc2-list.png)
 
 
-> 备注：本文实验配置均为4核CPU、8GB内存、200GB存储、5M带宽。
+> 注意：为达到更好的效果，本文创建的5台云服务器配置均为4核CPU、8GB内存、200GB存储、5M带宽。
 
 ## 第二步：安装Docker
 1. 检查内核版本：
@@ -224,7 +265,7 @@ Status: Downloaded newer image for rancher/rancher:latest
 点击继续
 ![继续](04-connect-continue.png)
 
-设置管理密码
+设置管理密码(超级管理员用户名默认为`admin`)
 ![设置管理密码](05-rancher-setpwd.png)
 
 保存url地址
