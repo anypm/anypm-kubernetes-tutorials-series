@@ -68,6 +68,9 @@ Rancher可以更方便的管理Kubernetes集群，它可以从头开始轻松部
 > 注意：为达到更好的效果，本文创建的5台云服务器配置均为4核CPU、8GB内存、200GB存储、5M带宽。
 
 ## 第二步：安装Docker
+
+> 本步骤概述安装Docker的通用步骤，上一步准备的5台云服务器均可按本指南安装Docker-CE
+
 1. 检查内核版本：
 ```
 $ uname -a
@@ -232,7 +235,10 @@ Server: Docker Engine - Community
 
 
 
-## 第三步：安装rancher
+## 第三步：安装rancher Server
+
+> 本指南为安装rancher的通用步骤，从上述云服务器中挑选一台按照本指南安装rancher server即可
+
 安装和运行Rancher Server,运行如下命令会从Docker Hub仓库中拉取rancher镜像并完成安装
 ```
 sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
@@ -276,6 +282,9 @@ Status: Downloaded newer image for rancher/rancher:latest
 
 
 ## 第四步：安装Etcd节点与控制节点
+
+> 本指南为安装rancher的通用步骤，从上述云服务器中挑选两台分别作为Etcd节点和控制节点进行安装即可
+
 点击【Add Cluster】进入添加集群页面，设置集群名称:`k8s-cluster-rancher`，如下图
 
 ![添加集群](08-rancher-clustername.png)
@@ -359,6 +368,9 @@ Control Plane节点安装完成后会自动连接到Rancher管理服务器，管
 
 
 ## 第五步：安装工作节点
+
+> 本指南为安装工作节点的通用步骤，从上述云服务器中挑选两台作为工作节点进行安装即可
+
 重复**第四步**中的步骤安装**第一个工作节点**，详情如下：
 * 【Node Options】-【Node Role】中只勾选【Worker】
 * 【Node Options】-【Node Address】-【Public Address】中填写第一台工作节点云服务器的公网IP地址，如示例中的：`116.85.30.97`
