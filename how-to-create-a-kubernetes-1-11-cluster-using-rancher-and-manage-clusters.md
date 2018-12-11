@@ -1,4 +1,4 @@
-# 如何在Ubuntu上使用Rancher创建Kubernetes 1.11集群
+# 如何使用Rancher创建Kubernetes集群并进行可视化多集群管理
 
 ## 介绍
 Kubernetes是容器集群管理系统，是一个开源的平台，可以实现容器集群的自动化部署、自动扩缩容、维护等功能。
