@@ -156,7 +156,7 @@ OUTPUT
 
 xenial
 ```
-添加Docker稳定版的官方软件源
+添加Docker稳定版的官方软件源,本文中使用16.04 LTS对应的系统代号为`xenial`；若使用其他版本ubuntu，将代号修改为对应版本的系统代号即可
 ```
 sudo add-apt-repository \
 "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
@@ -276,16 +276,16 @@ Status: Downloaded newer image for rancher/rancher:latest
 
 
 ## 第四步：安装Etcd节点与控制节点
-点击【Add Cluster】进入添加集群页面，设置集群名称，如下图
+点击【Add Cluster】进入添加集群页面，设置集群名称:`k8s-cluster-rancher`，如下图
 
 ![添加集群](08-rancher-clustername.png)
 
 设置Etcd节点选项
 
 * 【Node Options】-【Node Role】中只勾选【Etcd】
-* 【Node Options】-【Node Address】-【Public Address】中天蝎Etcd云服务器的公网IP地址，如示例中的：`116.85.5.250`
-* 【Node Options】-【Node Address】-【Internal Address】中天蝎Etcd云服务器的内网IP地址，如示例中的：`10.10.73.109`
-* 【Node Options】-【Node Name】中填写Etcd云服务器的名称，如示例中的：`kubernetes-etcd-x`
+* 【Node Options】-【Node Address】-【Public Address】中天蝎Etcd云服务器的公网IP地址，如示例中的：`116.85.13.168`
+* 【Node Options】-【Node Address】-【Internal Address】中天蝎Etcd云服务器的内网IP地址，如示例中的：`10.10.150.195`
+* 【Node Options】-【Node Name】中填写Etcd云服务器的名称，如示例中的：`kubernetes-etc-x`
 
 设置效果如下图：
 
@@ -293,7 +293,7 @@ Status: Downloaded newer image for rancher/rancher:latest
 
 下方会自动生成Etcd节点的配置命令：
 ```
-sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.1.1 --server https://116.85.13.192 --token kcfhmzmtqhbm7lvhkcbmk5zrfdqd4mjrtqxh7684xzbsmcblp7kpmw --ca-checksum 8b256294489a4230cd34035520e790dc5fbc9541f80c28dfb7b1f8f1d16eecfe --node-name kubernetes-etcd-x --address 116.85.5.250 --internal-address 10.10.73.109 --etcd
+sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.1.3 --server https://116.85.46.53 --token zs6zxddp7rdfxfvwhcpdw4vfxbfqccm2vg6hh7st2nwr9l9rtbk7j8 --ca-checksum 551014a641a7d23d0ed67153e2797b9fd8670307422cdfc232020cb831e376aa --node-name kubernetes-etc-x --address 116.85.13.168 --internal-address 10.10.150.195 --etcd
 
 ```
 
@@ -301,20 +301,20 @@ sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kube
 ```
 OUTPUT
 
-Unable to find image 'rancher/rancher-agent:v2.1.1' locally
-v2.1.1: Pulling from rancher/rancher-agent
-473ede7ed136: Pull complete 
-c46b5fa4d940: Pull complete 
-93ae3df89c92: Pull complete 
-6b1eed27cade: Pull complete 
-f21f12a5ca08: Pull complete 
-33a2b1a4bb51: Pull complete 
-a0876ba0c412: Pull complete 
-cbb664d29f0f: Pull complete 
-bd32e23bc74b: Pull complete 
-Digest: sha256:2236b44b39bf0c2ae2f5c158f2516e3c89c85f8fa664fa3315b3effe66e63395
-Status: Downloaded newer image for rancher/rancher-agent:v2.1.1
-303f78d58a7d312a9444832f0536d9ce426c007aba9c24a7488f15fbc1eb0b90
+Unable to find image 'rancher/rancher-agent:v2.1.3' locally
+v2.1.3: Pulling from rancher/rancher-agent
+32802c0cfa4d: Pull complete 
+da1315cffa03: Pull complete 
+fa83472a3562: Pull complete 
+f85999a86bef: Pull complete 
+5bf53f7eb665: Pull complete 
+b6dee6425e98: Pull complete 
+15612bde45d1: Pull complete 
+5bb137229af3: Pull complete 
+72fc31ea0fd1: Pull complete 
+Digest: sha256:c0c15e3fb32d516a16889765fe9ce62713617dc2f599a516c7d66620c737b705
+Status: Downloaded newer image for rancher/rancher-agent:v2.1.3
+ab7275fe95b6d2ffeb9c9090f642af311c71de5d4c2ca8e3d39163f4e52ad89c
 ```
 Etcd节点安装完成后会自动连接到Rancher管理服务器，管理控制台底部会提示`1 new node has registered`。
 
@@ -322,8 +322,8 @@ Etcd节点安装完成后会自动连接到Rancher管理服务器，管理控制
 
 同样的步骤安装控制节点：
 * 【Node Options】-【Node Role】中只勾选【Control Plane】
-* 【Node Options】-【Node Address】-【Public Address】中天蝎Etcd云服务器的公网IP地址，如示例中的：`116.85.10.134`
-* 【Node Options】-【Node Address】-【Internal Address】中天蝎Etcd云服务器的内网IP地址，如示例中的：`10.10.169.63`
+* 【Node Options】-【Node Address】-【Public Address】中天蝎Etcd云服务器的公网IP地址，如示例中的：`116.85.60.45`
+* 【Node Options】-【Node Address】-【Internal Address】中天蝎Etcd云服务器的内网IP地址，如示例中的：`10.10.0.89`
 * 【Node Options】-【Node Name】中填写Control Plane云服务器的名称，如示例中的：`kubernetes-controller-x`
 
 设置效果如下图：
@@ -332,7 +332,7 @@ Etcd节点安装完成后会自动连接到Rancher管理服务器，管理控制
 
 下方会自动生成Control Plane节点的配置命令：
 ```
-sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.1.1 --server https://116.85.13.192 --token kcfhmzmtqhbm7lvhkcbmk5zrfdqd4mjrtqxh7684xzbsmcblp7kpmw --ca-checksum 8b256294489a4230cd34035520e790dc5fbc9541f80c28dfb7b1f8f1d16eecfe --node-name kubernetes-controller-x --address 116.85.10.134 --internal-address 10.10.169.63 --controlplane
+sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.1.3 --server https://116.85.46.53 --token zs6zxddp7rdfxfvwhcpdw4vfxbfqccm2vg6hh7st2nwr9l9rtbk7j8 --ca-checksum 551014a641a7d23d0ed67153e2797b9fd8670307422cdfc232020cb831e376aa --node-name kubernetes-controller-x --address 116.85.60.45 --internal-address 10.10.0.89 --controlplane
 
 ```
 
@@ -361,8 +361,8 @@ Control Plane节点安装完成后会自动连接到Rancher管理服务器，管
 ## 第五步：安装工作节点
 重复**第四步**中的步骤安装**第一个工作节点**，详情如下：
 * 【Node Options】-【Node Role】中只勾选【Worker】
-* 【Node Options】-【Node Address】-【Public Address】中填写第一台工作节点云服务器的公网IP地址，如示例中的：`116.85.5.252`
-* 【Node Options】-【Node Address】-【Internal Address】中填写第一台工作节点云服务器的内网IP地址，如示例中的：`10.10.37.29`
+* 【Node Options】-【Node Address】-【Public Address】中填写第一台工作节点云服务器的公网IP地址，如示例中的：`116.85.30.97`
+* 【Node Options】-【Node Address】-【Internal Address】中填写第一台工作节点云服务器的内网IP地址，如示例中的：`10.10.232.55`
 * 【Node Options】-【Node Name】中填写第一台工作节点云服务器的名称，如示例中的：`kubernetes-worker01-x`
 
 设置效果如下图：
@@ -371,35 +371,34 @@ Control Plane节点安装完成后会自动连接到Rancher管理服务器，管
 
 下方会自动生成工作节点的配置命令：
 ```
-sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.1.1 --server https://116.85.13.192 --token kcfhmzmtqhbm7lvhkcbmk5zrfdqd4mjrtqxh7684xzbsmcblp7kpmw --ca-checksum 8b256294489a4230cd34035520e790dc5fbc9541f80c28dfb7b1f8f1d16eecfe --node-name kubernetes-worker01-x --address 116.85.5.252 --internal-address 10.10.37.29 --worker
+sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.1.3 --server https://116.85.46.53 --token zs6zxddp7rdfxfvwhcpdw4vfxbfqccm2vg6hh7st2nwr9l9rtbk7j8 --ca-checksum 551014a641a7d23d0ed67153e2797b9fd8670307422cdfc232020cb831e376aa --node-name kubernetes-worker01-x --address 116.85.30.97 --internal-address 10.10.232.55 --worker
 
 ```
 
 复制配置命令到`Worker1`云服务器终端并运行,输出如下：
 ```
 OUTPUT
-
-Unable to find image 'rancher/rancher-agent:v2.1.1' locally
-v2.1.1: Pulling from rancher/rancher-agent
-473ede7ed136: Pull complete 
-c46b5fa4d940: Pull complete 
-93ae3df89c92: Pull complete 
-6b1eed27cade: Pull complete 
-f21f12a5ca08: Pull complete 
-33a2b1a4bb51: Pull complete 
-a0876ba0c412: Pull complete 
-cbb664d29f0f: Pull complete 
-bd32e23bc74b: Pull complete 
-Digest: sha256:2236b44b39bf0c2ae2f5c158f2516e3c89c85f8fa664fa3315b3effe66e63395
-Status: Downloaded newer image for rancher/rancher-agent:v2.1.1
-638a0126b7a06138d463c08d4e41d37c65b546ef5dddca0619b065519e442acc
+Unable to find image 'rancher/rancher-agent:v2.1.3' locally
+v2.1.3: Pulling from rancher/rancher-agent
+32802c0cfa4d: Pull complete 
+da1315cffa03: Pull complete 
+fa83472a3562: Pull complete 
+f85999a86bef: Pull complete 
+5bf53f7eb665: Pull complete 
+b6dee6425e98: Pull complete 
+15612bde45d1: Pull complete 
+5bb137229af3: Pull complete 
+72fc31ea0fd1: Pull complete 
+Digest: sha256:c0c15e3fb32d516a16889765fe9ce62713617dc2f599a516c7d66620c737b705
+Status: Downloaded newer image for rancher/rancher-agent:v2.1.3
+5213acaac6a21cfa5770415755f924a53fa037aeb1163df50d3a8c9ed12d5c36
 ```
 `Worker1`节点安装完成后会自动连接到Rancher管理服务器，管理控制台底部会提示`3 new node has registered`
 
 重复如上步骤安装**第二个工作节点**，详情如下：
 * 【Node Options】-【Node Role】中只勾选【Worker】
-* 【Node Options】-【Node Address】-【Public Address】中填写第二台工作节点云服务器的公网IP地址，如示例中的：`116.85.37.182`
-* 【Node Options】-【Node Address】-【Internal Address】中填写第二台工作节点云服务器的内网IP地址，如示例中的：`10.10.124.220`
+* 【Node Options】-【Node Address】-【Public Address】中填写第二台工作节点云服务器的公网IP地址，如示例中的：`116.85.37.60`
+* 【Node Options】-【Node Address】-【Internal Address】中填写第二台工作节点云服务器的内网IP地址，如示例中的：`10.10.148.43`
 * 【Node Options】-【Node Name】中填写第二台工作节点云服务器的名称，如示例中的：`kubernetes-worker02-x`
 
 设置效果如下图：
@@ -408,7 +407,7 @@ Status: Downloaded newer image for rancher/rancher-agent:v2.1.1
 
 下方会自动生成工作节点的配置命令：
 ```
-sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.1.1 --server https://116.85.13.192 --token kcfhmzmtqhbm7lvhkcbmk5zrfdqd4mjrtqxh7684xzbsmcblp7kpmw --ca-checksum 8b256294489a4230cd34035520e790dc5fbc9541f80c28dfb7b1f8f1d16eecfe --node-name kubernetes-worker02-x --address 116.85.37.182 --internal-address 10.10.124.220 --worker
+sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.1.3 --server https://116.85.46.53 --token zs6zxddp7rdfxfvwhcpdw4vfxbfqccm2vg6hh7st2nwr9l9rtbk7j8 --ca-checksum 551014a641a7d23d0ed67153e2797b9fd8670307422cdfc232020cb831e376aa --node-name kubernetes-worker02-x --address 116.85.37.60 --internal-address 10.10.148.43 --worker
 
 ```
 
