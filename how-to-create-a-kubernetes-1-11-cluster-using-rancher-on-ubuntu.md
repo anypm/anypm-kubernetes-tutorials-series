@@ -23,7 +23,7 @@ Kubernetes是Google 2014年创建管理的，是Google 10多年大规模容器�
 * 使用RKE创建Kubernetes集群
 * 使用Rancher创建Kubrnetes集群
 
-本文主要讲述**如何使用Rancher创建Kubernetes集群并进行可视化的集群管理**。
+本文主要讲述**如何使用Rancher创建Kubernetes集群并进行可视化的集群管理**。后续会陆续发布其他方式创建Kubernetes集群，并在本文中给出相关链接，请您持续关注
 
 ### Rancher创建与管理Kubernetes集群的主要优势
 
@@ -47,7 +47,7 @@ Rancher可以更方便的管理Kubernetes集群，它可以从头开始轻松部
 * 1个控制(Controller)节点：
 * 2个工作(Worker)节点：
 
-完成本指南后您将学会如何安装Docker环境、搭建Rancher集群管理环境、使用Rancher创建Kubernetes环境和使用Rancher进行多集群管理
+完成本指南后您将学会**安装Docker环境**、**搭建Rancher集群管理环境**、**使用Rancher创建Kubernetes环境**和**使用Rancher进行多集群管理**。
 
 > 注意：配置推荐至少2核CPU、4GB内存、40GB存储、2M带宽，系统均为Ubuntu 16.04 LTS。为达到更好的效果，本文创建的5台云服务器配置均为4核CPU、8GB内存、200GB存储、5M带宽，系统选择Ubuntu 16.04 LTS。
 
