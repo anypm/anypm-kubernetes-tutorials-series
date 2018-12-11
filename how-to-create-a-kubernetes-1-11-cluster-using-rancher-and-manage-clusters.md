@@ -340,20 +340,20 @@ sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kube
 ```
 OUTPUT
 
-Unable to find image 'rancher/rancher-agent:v2.1.1' locally
-v2.1.1: Pulling from rancher/rancher-agent
-473ede7ed136: Pull complete 
-c46b5fa4d940: Pull complete 
-93ae3df89c92: Pull complete 
-6b1eed27cade: Pull complete 
-f21f12a5ca08: Pull complete 
-33a2b1a4bb51: Pull complete 
-a0876ba0c412: Pull complete 
-cbb664d29f0f: Pull complete 
-bd32e23bc74b: Pull complete 
-Digest: sha256:2236b44b39bf0c2ae2f5c158f2516e3c89c85f8fa664fa3315b3effe66e63395
-Status: Downloaded newer image for rancher/rancher-agent:v2.1.1
-bdd468b2552aba5db0e5bdd6b10d0f3b44872f0bbbe7292864dac69ea134ad4e
+Unable to find image 'rancher/rancher-agent:v2.1.3' locally
+v2.1.3: Pulling from rancher/rancher-agent
+32802c0cfa4d: Pull complete 
+da1315cffa03: Pull complete 
+fa83472a3562: Pull complete 
+f85999a86bef: Pull complete 
+5bf53f7eb665: Pull complete 
+b6dee6425e98: Pull complete 
+15612bde45d1: Pull complete 
+5bb137229af3: Pull complete 
+72fc31ea0fd1: Pull complete 
+Digest: sha256:c0c15e3fb32d516a16889765fe9ce62713617dc2f599a516c7d66620c737b705
+Status: Downloaded newer image for rancher/rancher-agent:v2.1.3
+cb878cb4c25b985f7a1af4be7658338c62f2a312f4c78da07e4f1e6a8b48c706
 ```
 Control Plane节点安装完成后会自动连接到Rancher管理服务器，管理控制台底部会提示`2 new node has registered`
 
