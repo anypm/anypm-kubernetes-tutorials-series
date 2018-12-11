@@ -446,10 +446,44 @@ Status: Downloaded newer image for rancher/rancher-agent:v2.1.1
 
 至此，Kubernetes集群所有节点均已成功安装，点击【Done】完成集群设置即可。
 
-## 第六步：查看集群
+## 第六步：查看与管理集群
+
+> 可以按照上述方法添加多个Kubernetes集群，本文为更好的演示多集群管理效果，添加了多个kubernetes集群
+
+#### 查看集群，可以看到集群各节点状态还在准备中
+
+![集群准备中](13-rancher-cluster.png)
+
+#### 【Global】菜单可查看当前存在的集群并切换到您需要管理的集群
+
+![Global](14-rancher-cluster-global.png)
+
+#### 【Cluster】菜单可以可视化的查看和管理某个具体的集群信息，也可以图表化查看集群资源的消耗情况
+
+![Cluster](15-rancher-cluster-clusterviews.png)
+
+#### 【Node】菜单可以查看与管理节点服务器
+
+![Node](16-rancher-cluster-nodeviews.png)
+
+#### 【Project/Namespace】菜单可以查看与管理命名空间
+![Namespace](17-rancher-cluster-nsviews.png)
+
+#### 【Members】菜单可以管理Rancher管理控制台的成员信息，包括账户、密码、角色/权限等
+![Members](18-rancher-cluster-membersviews.png)
 
 
+#### 【Tools】菜单可以管理告警、提醒与日志信息
+![Tools](19-rancher-cluster-toolsviews.png)
 
+
+点击右下角的【Language】可以切换语言，如果您更习惯看中文，恭喜～您可以选择【简体中文】获得更好的管理体验:)
+
+![Language](20-rancher-cluster-lang.png)
+
+
+## 结论
+Rancher为DevOps工程师提供了一个直观的用户界面来管理他们的服务容器，用户不需要深入了解Kubernetes概念就可以开始使用Rancher。 Rancher包含应用商店，支持一键式部署Helm和Compose模板。Rancher通过各种云、本地生态系统产品认证，其中包括安全工具，监控系统，容器仓库以及存储和网络驱动程序。
 
 ## K8S相关概念
 
@@ -496,3 +530,7 @@ PV 和 PVC 使得 Kubernetes 集群具备了存储的逻辑抽象能力，使得
 * Ingress
 
 Ingress 是授权入站连接到达集群服务的规则集合。你可以通过 Ingress 配置提供外部可访问的 URL、负载均衡、SSL、基于名称的虚拟主机等。用户通过 POST Ingress 资源到 API server 的方式来请求 Ingress。 Ingress controller 负责实现 Ingress，通常使用负载均衡器，它还可以配置边界路由和其他前端，这有助于以 HA 方式处理流量。
+
+
+> 写在后面：本文是《kubernetes tutorials》系列文章的第一篇，本文的一个重要目的是帮助您如何使用rancher从零开始搭建一个kubernetes集群，并初步了解多集群可视化管理。《kubernetes tutorials》系列后续还会陆续推出更多相关系列文章详细介绍更丰富的kubernetes安装部署、集群管理实践与原理解析，尽情期待
+
