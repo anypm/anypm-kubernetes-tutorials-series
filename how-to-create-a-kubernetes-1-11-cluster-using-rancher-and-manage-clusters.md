@@ -69,7 +69,7 @@ Rancher可以更方便的管理Kubernetes集群，它可以从头开始轻松部
 
 ## 第二步：安装Docker
 
-> 本步骤概述安装Docker的通用步骤，上一步准备的5台云服务器均可按本指南安装Docker-CE
+> 本步骤概述安装Docker的通用步骤，上一步准备的5台云服务器均可按本指南安装Docker-CE。更详细的Docker安装与使用教程请参考[如何用滴滴云在Ubuntu 16.04上安装和使用Docker](https://github.com/luneyuyu/usedocker/blob/master/How-to-install-and-use-Docker-on-Ubuntu16.04-by-didiyun.md)
 
 1. 检查内核版本：
 ```
