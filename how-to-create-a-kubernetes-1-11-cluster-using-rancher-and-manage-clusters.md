@@ -42,10 +42,10 @@ Rancher可以更方便的管理Kubernetes集群，它可以从头开始轻松部
 ## 目标
 集群包含以下资源
 
-* 1个Rancher节点：
-* 1个Etcd节点：
-* 1个控制(Controller)节点：
-* 2个工作(Worker)节点：
+* 1个Rancher节点：用于部署Rancher Server，通过该节点可以实现可视化多集群、跨云管理Kubernetes管理
+* 1个Etcd节点：存储主控制节点和工作节点之间的任务调度等数据信息
+* 1个控制(Controller)节点：部署Kunbernetes集群主控制节点，用于管理和监控Kubernetes其它的工作节点和存在状态信息。
+* 2个工作(Worker)节点：部署Kubernetes集群的工作节点，用于运行容器化的应用。
 
 完成本指南后您将学会**安装Docker环境**、**搭建Rancher集群管理环境**、**使用Rancher创建Kubernetes环境**和**使用Rancher进行多集群管理**。
 
@@ -259,16 +259,16 @@ Status: Downloaded newer image for rancher/rancher:latest
 6a9758a790ebe1b4ee94725023ec98b214304e2f59fc71c658ef025b0533efef
 
 ```
-在本地主机打开浏览器，输入rancher访问地址：https://dc2公网IP， 如本文中安装rancher server的云服务器公网IP地址为`116.85.46.53`,所以rancher管理界面的访问地址为https://116.85.46.53, 如下图：
+打开浏览器，输入https://<server_ip>,server_ip替换为运行Rancher容器主机的ip;如本文中安装rancher server的云服务器公网IP地址为`116.85.46.53`,所以rancher管理界面的访问地址为https://116.85.46.53, 如下图：
 ![安全连接](03-connect-adv.png)
 
-点击继续
+因为是自动使用的自签名证书，在第一次登录会提示安全授信问题，信任即可；
 ![继续](04-connect-continue.png)
 
-设置管理密码(超级管理员用户名默认为`admin`)
+设置管理密码(第一次登录会要求设置管理员密码，默认管理员账号为: `admin`)
 ![设置管理密码](05-rancher-setpwd.png)
 
-保存url地址
+设置Rancher Server URL(这个Rancher Server URL是agent节点注册的地址，需要保证这个地址能够被其他主机访问)
 ![保存访问url地址](06-rancher-saveurl.png)
 
 进入rancher server管理控制台
