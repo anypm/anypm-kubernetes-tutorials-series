@@ -256,10 +256,10 @@ a00bebfc6f0e: Pull complete
 db38f96efb72: Pull complete 
 Digest: sha256:b5762180fdc05b5be8337453cc9bbadc33645d50cd8d2dac89c6676bf07460b7
 Status: Downloaded newer image for rancher/rancher:latest
-87e6362368f4c0903d390c07be08636684d568f6cc32dca9ff5edc3a3584fb55
+6a9758a790ebe1b4ee94725023ec98b214304e2f59fc71c658ef025b0533efef
 
 ```
-在本地主机打开浏览器，输入rancher访问地址：https://dc2公网IP， 如本案例中安装rancher server的DC2云服务器公网IP地址为`116.85.13.192`,所以rancher管理界面的访问地址为https://116.85.13.192, 如下图：
+在本地主机打开浏览器，输入rancher访问地址：https://dc2公网IP， 如本文中安装rancher server的云服务器公网IP地址为`116.85.46.53`,所以rancher管理界面的访问地址为https://116.85.46.53, 如下图：
 ![安全连接](03-connect-adv.png)
 
 点击继续
