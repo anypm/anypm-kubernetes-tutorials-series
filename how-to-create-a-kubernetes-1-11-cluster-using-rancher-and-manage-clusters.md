@@ -1,4 +1,4 @@
-# 如何使用Rancher创建Kubernetes集群并进行可视化多集群管理
+# 如何使用Rancher创建Kubernetes集群并进行多集群可视化管理
 
 > 写在前面：本文是[《kubernetes tutorials》](https://github.com/anypm/kubernetes-tutorials-series)系列文章的第一篇，本文的一个重要目的是帮助您如何使用rancher从零开始搭建一个kubernetes集群，并初步了解多集群可视化管理。[《kubernetes tutorials》](https://github.com/anypm/kubernetes-tutorials-series)系列后续还会陆续推出更多相关系列文章详细介绍更丰富的kubernetes安装部署、集群管理实践与原理解析，尽情期待～**天才都会三个神操作 `Watching` & `Star` & `Fork`**
 
