@@ -189,6 +189,8 @@ docker volume       #卷管理
 Docker命令
 docker 常用命令如下
 管理命令：
+
+```
   container  管理容器
   image      管理镜像
   network    管理网络
@@ -200,11 +202,13 @@ docker 常用命令如下
   swarm      管理Swarm集群
   system      查看系统信息
   volume      管理卷
- 
-  如：docker container ls 显示所有容器
- 
+```
+
+> 如：docker container ls 显示所有容器
+
 普通命令：
- 
+
+```
   attach    进入一个运行的容器
   build      从一个DockerFile构建镜像
 commit从容器创建一个镜像
@@ -245,81 +249,122 @@ stop停止容器
 update更新容器配置
 version显示Docker的版本信息
 wait阻塞直到容器停止，然后打印退出代码
- 
-  如：docker images 显示所有镜像
+```
+>如：docker images 显示所有镜像
+
 下面将分别介绍一些常用操作
 docker 拉取并运行一个镜像
 下载镜像
+```
 $ docker pull centos
+```
+
 查看已经下载的镜像
+```
 $ docker images
     REPOSITORY          TAG                IMAGE ID            CREATED            SIZE
 centos              latest49f7960eb7e46weeks ago200MB
 hello-world        latest              f2a91732366c8months ago1.85kB
+```
 运行一个镜像并生成容器
 //运行一个centos镜像，并执行/bin/bash命令
+```
 $ docker run centos /bin/bash
+```
 输入命令docker ps或者docker container ls查看运行中的容器，发现列表为空，原因是容器在执行完成命令后会自动退出，下面介绍让让容器停留在后台的方法
+```
 $ docker ps
     CONTAINER ID        IMAGE              COMMAND            CREATED            STATUS              PORTS              NAMES
- 
+```
+```
 $ docker container ls
     CONTAINER ID        IMAGE              COMMAND            CREATED            STATUS              PORTS              NAMES
+```
 使用命令docker ps -a或者docker container ls -a 查看所用容器,并显示了容器的状态
+```
 $ docker ps -a
 CONTAINER ID        IMAGE              COMMAND            CREATED            STATUS                      PORTS              NAMES
 5525373371f3        centos"/bin/bash"7minutes ago      Exited (0)7minutes ago                        nifty_rosalind
+```
 docker 让镜像运行停留在后台
 1.启动一个容器并后台运行
 docker run命令 通过增加-i -t参数可以让容器并进入容器
+```
 docker run -i -t centos /bin/bash
+```
 按 Ctrl + P + Q 退出容器，再用 docker ps 进行查看
+```
 $ docker ps
 CONTAINER ID        IMAGE              COMMAND            CREATED            STATUS              PORTS              NAMES
 61b041e4e063        centos"/bin/bash"3minutes ago      Up3minutes                            nervous_saha
+```
 状态显示仍在运行中
 docker 进入一个运行的容器
+```
 $ docker ps
 CONTAINER ID        IMAGE              COMMAND                  CREATED            STATUS              PORTS                    NAMES
 36afde543eb5        mysql:5.7"docker-entrypoint.s…"About anhourago  Up About anhour0.0.0.0:3306->3306/tcp  mymysql
 $ docker exec -it36afde543eb5 /bin/bash
+```
 -i 保持STDIN打开 -t 分配一个虚拟TTY窗口
 docker 提交一个镜像到镜像仓库
 首先到https://hub.docker.com/注册一个账号，保存下用户名密码 2.控制台登陆dockerhub账户
+```
 $ docker login
+```
     输入刚注册的用户名密码
 查看镜像
+```
 $ docker images
 REPOSITORY          TAG                IMAGE ID            CREATED            SIZE
 redis              latest              f06a5773f01e2days ago83.4MB
+```
 选择需要上传的镜像，重命名为指定的格式
+```
 $ docker  tag redis username/myredis:v1
+```
 username：为自己注册的用户名
 myredis:为自己为镜像取的名字
 v1：为任意设置的版本号
 完成上述操作后，即可提交镜像到自己的仓库
+```
 docker pull username/myredis:v1
+```
 docker 映射文件从宿主机到容器,端口号映射
 //将宿主机的81端口映射到容器的80端口
 //将宿主机的/develop/data卷，映射到容器的/data卷
+```
 $ docker run -i -t -p81:80-v /develop/data:/datacentos /bin/bash
+```
 -p:映射端口号 -v:磁盘目录映射
 docker 更改端口号映射
 运行中的容器无法映射新的端口号，也无法更改端口号映射，但可以通过两种方法解决
 iptable转发端口
 //查看容器ip
+```
 $ docker inspect36afde543eb5 | grep IPAddress
 "IPAddress":"172.17.0.2"
+```
 //将主机的8081端口映射到宿主机的8080端口
+```
 $ iptables -t nat -A  DOCKER -p tcp --dport8081-j DNAT --to-destination172.17.0.2:8080
+```
 先提交容器为镜像，再运行这个容器，同时指定新的端口映射
 //提交容器为镜像
+```
 $ docker commit9995ffa15f46  mycentos:0.1
+```
 //停止旧的容器
+```
 $ docker stop9995ffa15f46
+```
 //重新从旧的镜像启动容器
+```
 $ docker run -i -t  -p8081:8080mycentos:0.1
+```
 从DockerFile创建镜像
+```
 $ docker build -tmyimage:v1 .
+```
 -t ：指定镜像名称和标签，格式为'name:tag' .: 最后一个点代表当前目录，也可以换成其它的路径
 
