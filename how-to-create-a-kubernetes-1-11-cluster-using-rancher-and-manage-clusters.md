@@ -1,23 +1,24 @@
 # 使用Rancher创建Kubernetes集群并进行多集群可视化管理
 
-> 写在前面：[《kubernetes tutorials》](https://github.com/anypm/kubernetes-tutorials-series) 系列文章旨在帮助您从入门到高阶逐步了解并掌握kubernetes技术栈的实操、理论和最佳实践。主题将包括Docker基础与实操、Kubernetes基础与实操、基于Kubernetes的应用部署(工作负载版与集群版)、基于Kubernetes的CI/CD、Kubernetes集群与应用监控、Kubernetes运维与最佳生产实践等，因为平时工作比较忙碌，尽量确保每周1～3篇相关文章，主题可能会比较随机，待全系列完成后再系统整理，尽情期待～ **天才都会三个神操作 `Watching` & `Star` & `Fork`**
+> 写在前面：[《kubernetes tutorials》](https://github.com/anypm/kubernetes-tutorials-series) 系列文章旨在帮助您从入门到高阶逐步了解并掌握kubernetes技术栈的实操、理论和最佳实践。主题将包括**Docker基础与实操**、**Kubernetes基础与实操**、**基于Kubernetes的应用部署(工作负载版与集群版)**、**基于Kubernetes的CI/CD**、**Kubernetes集群与应用监控**、**Kubernetes运维与最佳生产实践**等，因为平时工作比较忙碌，尽量确保每周1～3篇相关文章，主题可能会比较随机，待全系列完成后再系统整理，尽情期待～ **天才都会三个神操作 `Watching` & `Star` & `Fork`**
+
 
 ## 介绍
 Kubernetes是容器集群管理系统，是一个开源的平台，可以实现容器集群的自动化部署、自动扩缩容、维护等功能。
 
 通过Kubernetes你可以：
+* 快速部署应用
+* 快速扩展应用
+* 无缝对接新的应用功能
+* 节省资源，优化硬件资源的使用
 
-快速部署应用
-快速扩展应用
-无缝对接新的应用功能
-节省资源，优化硬件资源的使用
-Kubernetes的目标是促进完善组件和工具的生态系统，以减轻应用程序在公有云或私有云中运行的负担。
+Kubernetes是Google 2014年创建管理的，是Google 10多年大规模容器管理技术Borg的开源版本。Kubernetes的目标是促进完善组件和工具的生态系统，以减轻应用程序在公有云或私有云中运行的负担。
 
 ### Kubernetes 特点
-可移植: 支持公有云，私有云，混合云，多重云（multi-cloud）
-可扩展: 模块化, 插件化, 可挂载, 可组合
-自动化: 自动部署，自动重启，自动复制，自动伸缩/扩展
-Kubernetes是Google 2014年创建管理的，是Google 10多年大规模容器管理技术Borg的开源版本。
+* 可移植: 支持公有云，私有云，混合云，多重云（multi-cloud）
+* 可扩展: 模块化, 插件化, 可挂载, 可组合
+* 自动化: 自动部署，自动重启，自动复制，自动伸缩/扩展
+
 
 ### 常见的创建Kubernetes集群的方式有
 * [使用Kubeadm创建Kubernetes集群](https://github.com/anypm/kubernetes-tutorials-series/blob/master/how-to-create-a-kubernetes-1-11-cluster-using-kubeadm-on-ubuntu-18-04.md)
