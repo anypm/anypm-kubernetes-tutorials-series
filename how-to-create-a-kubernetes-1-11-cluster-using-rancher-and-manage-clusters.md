@@ -1,29 +1,30 @@
-# 如何使用Rancher创建Kubernetes集群并进行多集群可视化管理
+# 使用Rancher创建Kubernetes集群并进行多集群可视化管理
 
-> 写在前面：本文是[《kubernetes tutorials》](https://github.com/anypm/kubernetes-tutorials-series)系列文章的第一篇，本文的一个重要目的是帮助您如何使用rancher从零开始搭建一个kubernetes集群，并初步了解多集群可视化管理。[《kubernetes tutorials》](https://github.com/anypm/kubernetes-tutorials-series)系列后续还会陆续推出更多相关系列文章详细介绍更丰富的kubernetes安装部署、集群管理实践与原理解析，尽情期待～**天才都会三个神操作 `Watching` & `Star` & `Fork`**
+> 写在前面：[《kubernetes tutorials》](https://github.com/anypm/kubernetes-tutorials-series) 系列文章旨在帮助您从入门到高阶逐步了解并掌握kubernetes技术栈的实操、理论和最佳实践。主题将包括**Docker基础与实操**、**Kubernetes基础与实操**、**基于Kubernetes的应用部署(工作负载版与集群版)**、**基于Kubernetes的CI/CD**、**Kubernetes集群与应用监控**、**Kubernetes运维与最佳生产实践**等，因为平时工作比较忙碌，尽量确保每周1～3篇相关文章，主题可能会比较随机，待全系列完成后再系统整理，尽情期待～ **天才都会三个神操作 `Watching` & `Star` & `Fork`**
+
 
 ## 介绍
 Kubernetes是容器集群管理系统，是一个开源的平台，可以实现容器集群的自动化部署、自动扩缩容、维护等功能。
 
 通过Kubernetes你可以：
+* 快速部署应用
+* 快速扩展应用
+* 无缝对接新的应用功能
+* 节省资源，优化硬件资源的使用
 
-快速部署应用
-快速扩展应用
-无缝对接新的应用功能
-节省资源，优化硬件资源的使用
-Kubernetes的目标是促进完善组件和工具的生态系统，以减轻应用程序在公有云或私有云中运行的负担。
+Kubernetes是Google 2014年创建管理的，是Google 10多年大规模容器管理技术Borg的开源版本。Kubernetes的目标是促进完善组件和工具的生态系统，以减轻应用程序在公有云或私有云中运行的负担。
 
 ### Kubernetes 特点
-可移植: 支持公有云，私有云，混合云，多重云（multi-cloud）
-可扩展: 模块化, 插件化, 可挂载, 可组合
-自动化: 自动部署，自动重启，自动复制，自动伸缩/扩展
-Kubernetes是Google 2014年创建管理的，是Google 10多年大规模容器管理技术Borg的开源版本。
+* 可移植: 支持公有云，私有云，混合云，多重云（multi-cloud）
+* 可扩展: 模块化, 插件化, 可挂载, 可组合
+* 自动化: 自动部署，自动重启，自动复制，自动伸缩/扩展
+
 
 ### 常见的创建Kubernetes集群的方式有
 * [使用Kubeadm创建Kubernetes集群](https://github.com/anypm/kubernetes-tutorials-series/blob/master/how-to-create-a-kubernetes-1-11-cluster-using-kubeadm-on-ubuntu-18-04.md)
 * 使用Kubemini创建Kubernetes集群
 * 使用RKE创建Kubernetes集群
-* [使用Rancher创建Kubrnetes集群](https://github.com/anypm/kubernetes-tutorials-series/blob/master/how-to-create-a-kubernetes-1-11-cluster-using-rancher-and-manage-clusters.md)
+* **[使用Rancher创建Kubrnetes集群](https://github.com/anypm/kubernetes-tutorials-series/blob/master/how-to-create-a-kubernetes-1-11-cluster-using-rancher-and-manage-clusters.md)**
 
 本文主要讲述**如何使用Rancher创建Kubernetes集群并进行可视化的集群管理**。后续会陆续发布其他方式创建Kubernetes集群，并在本文中给出相关链接，请您持续关注
 
@@ -60,11 +61,11 @@ Rancher可以更方便的管理Kubernetes集群，它可以从头开始轻松部
 
 登陆滴滴云批量创建云服务器，如下图：
 
-![批量创建DC2云服务器](https://github.com/anypm/kubernetes-tutorials-series/blob/master/01-dc2-create.png)
+![批量创建DC2云服务器](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/01-dc2-create.png)
 
 购买成功后DC2云服务器列表如下图：
 
-![DC2列表](https://github.com/anypm/kubernetes-tutorials-series/blob/master/02-dc2-list.png)
+![DC2列表](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/02-dc2-list.png)
 
 
 > 注意：为达到更好的效果，本文创建的5台云服务器配置均为4核CPU、8GB内存、200GB存储、5M带宽。
@@ -268,19 +269,19 @@ Status: Downloaded newer image for rancher/rancher:latest
 
 ```
 打开浏览器，输入https://<server_ip>,server_ip替换为运行Rancher容器主机的ip;如本文中安装rancher server的云服务器公网IP地址为`116.85.46.53`,所以rancher管理界面的访问地址为https://116.85.46.53, 如下图：
-![安全连接](https://github.com/anypm/kubernetes-tutorials-series/blob/master/03-connect-adv.png)
+![安全连接](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/03-connect-adv.png)
 
 因为是自动使用的自签名证书，在第一次登录会提示安全授信问题，信任即可；
-![继续](https://github.com/anypm/kubernetes-tutorials-series/blob/master/04-connect-continue.png)
+![继续](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/04-connect-continue.png)
 
 设置管理密码(第一次登录会要求设置管理员密码，默认管理员账号为: `admin`)
-![设置管理密码](https://github.com/anypm/kubernetes-tutorials-series/blob/master/05-rancher-setpwd.png)
+![设置管理密码](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/05-rancher-setpwd.png)
 
 设置Rancher Server URL(这个Rancher Server URL是agent节点注册的地址，需要保证这个地址能够被其他主机访问)
-![保存访问url地址](https://github.com/anypm/kubernetes-tutorials-series/blob/master/06-rancher-saveurl.png)
+![保存访问url地址](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/06-rancher-saveurl.png)
 
 进入rancher server管理控制台
-![rancher server管理控制台](https://github.com/anypm/kubernetes-tutorials-series/blob/master/07-rancher-empty.png)
+![rancher server管理控制台](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/07-rancher-empty.png)
 
 
 ## 第四步：安装Etcd节点与控制节点
@@ -289,7 +290,7 @@ Status: Downloaded newer image for rancher/rancher:latest
 
 点击【Add Cluster】进入添加集群页面，设置集群名称:`k8s-cluster-rancher`，如下图
 
-![添加集群](https://github.com/anypm/kubernetes-tutorials-series/blob/master/08-rancher-clustername.png)
+![添加集群](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/08-rancher-clustername.png)
 
 设置Etcd节点选项
 
@@ -300,7 +301,7 @@ Status: Downloaded newer image for rancher/rancher:latest
 
 设置效果如下图：
 
-![设置Etcd](https://github.com/anypm/kubernetes-tutorials-series/blob/master/09-rancher-etcd.png)
+![设置Etcd](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/09-rancher-etcd.png)
 
 下方会自动生成Etcd节点的配置命令：
 ```
@@ -339,7 +340,7 @@ Etcd节点安装完成后会自动连接到Rancher管理服务器，管理控制
 
 设置效果如下图：
 
-![设置ctlplane](https://github.com/anypm/kubernetes-tutorials-series/blob/master/10-rancher-ctlplane.png)
+![设置ctlplane](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/10-rancher-ctlplane.png)
 
 下方会自动生成Control Plane节点的配置命令：
 ```
@@ -381,7 +382,7 @@ Control Plane节点安装完成后会自动连接到Rancher管理服务器，管
 
 设置效果如下图：
 
-![设置worker1](https://github.com/anypm/kubernetes-tutorials-series/blob/master/11-rancher-worker1.png)
+![设置worker1](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/11-rancher-worker1.png)
 
 下方会自动生成工作节点的配置命令：
 ```
@@ -417,7 +418,7 @@ Status: Downloaded newer image for rancher/rancher-agent:v2.1.3
 
 设置效果如下图：
 
-![设置worker2](https://github.com/anypm/kubernetes-tutorials-series/blob/master/12-rancher-worker2.png)
+![设置worker2](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/12-rancher-worker2.png)
 
 下方会自动生成工作节点的配置命令：
 ```
@@ -454,34 +455,34 @@ Status: Downloaded newer image for rancher/rancher-agent:v2.1.1
 
 #### 查看集群，可以看到集群各节点状态还在准备中
 
-![集群准备中](https://github.com/anypm/kubernetes-tutorials-series/blob/master/13-rancher-cluster.png)
+![集群准备中](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/13-rancher-cluster.png)
 
 #### 【Global】菜单可查看当前存在的集群并切换到您需要管理的集群
 
-![Global](https://github.com/anypm/kubernetes-tutorials-series/blob/master/14-rancher-cluster-global.png)
+![Global](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/14-rancher-cluster-global.png)
 
 #### 【Cluster】菜单可以可视化的查看和管理某个具体的集群信息，也可以图表化查看集群资源的消耗情况
 
-![Cluster](https://github.com/anypm/kubernetes-tutorials-series/blob/master/15-rancher-cluster-clusterviews.png)
+![Cluster](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/15-rancher-cluster-clusterviews.png)
 
 #### 【Node】菜单可以查看与管理节点服务器
 
-![Node](https://github.com/anypm/kubernetes-tutorials-series/blob/master/16-rancher-cluster-nodeviews.png)
+![Node](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/16-rancher-cluster-nodeviews.png)
 
 #### 【Project/Namespace】菜单可以查看与管理命名空间
-![Namespace](https://github.com/anypm/kubernetes-tutorials-series/blob/master/17-rancher-cluster-nsviews.png)
+![Namespace](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/17-rancher-cluster-nsviews.png)
 
 #### 【Members】菜单可以管理Rancher管理控制台的成员信息，包括账户、密码、角色/权限等
-![Members](https://github.com/anypm/kubernetes-tutorials-series/blob/master/18-rancher-cluster-membersviews.png)
+![Members](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/18-rancher-cluster-membersviews.png)
 
 
 #### 【Tools】菜单可以管理告警、提醒与日志信息
-![Tools](https://github.com/anypm/kubernetes-tutorials-series/blob/master/19-rancher-cluster-toolsviews.png)
+![Tools](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/19-rancher-cluster-toolsviews.png)
 
 
 点击右下角的【Language】可以切换语言，如果您更习惯看中文，恭喜～您可以选择【简体中文】获得更好的管理体验:)
 
-![Language](https://github.com/anypm/kubernetes-tutorials-series/blob/master/20-rancher-cluster-lang.png)
+![Language](https://github.com/anypm/kubernetes-tutorials-series/blob/master/images/20-rancher-cluster-lang.png)
 
 
 ## 结论
