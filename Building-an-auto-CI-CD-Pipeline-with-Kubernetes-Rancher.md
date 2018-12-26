@@ -107,18 +107,144 @@
 ![构建管道](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/14-cicd-pipeline-list.png)
 
 
-
 ### 第三步：设置Docker仓库
 
+1)登陆滴滴云控制台，顶部导航依次选择 **「计算」** 和 **「容器镜像服务」**，可以看到 **「我的仓库」**，点击 **「创建仓库」**
+
+![创建仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/15-cicd-didiyun-reg.png)
+
+2)填写命名空间和仓库名称
+
+![创建仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/16-cicd-didiyun-addrepo.png)
+
+3)设置仓库访问密码，此密码用于从docker客户端登陆。在本文实操案例中会用于自动构建流水线将构建好的docker镜像上传至滴滴云docker镜像仓库中
+
+![设置账户和密码](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/17-cicd-didiyun-reg-pwd.png)
+
+4)回到集群页面，选择我们前面创建的项目，此案例中为 **「cicd-demo」**，选择顶导 **「Resources」** -> **「Registries」**
+
+![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/18-cicd-reg.png)
+
+进入仓库授权列表页，点击 **「Add Registry」**
+
+![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/19-cicd-reg-list.png)
+
+
+5)仓库授权列表页面点击 **「Add Registry」**，自定义填写仓库授权名称， **「Address」** 选择 **「Custom」**，填写滴滴云仓库访问地址，格式为hub.didiyun.com/命名空间， 此处 **"命名空间"** 为步骤 **"2)"** 中填写的命名空间名称。填写用户名和密码，此处用户名和密码为步骤 **“3)”**中设置的用户名和密码。
+
+![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/20-cicd-addreg.png)
+
+设置完成后将自动返回列表页，我们会看到列表页多出一行仓库信息
+
+![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/21-cicd-addedreg.png)
+
+回到 **「Pipelines」** 页面继续构建流水线
 
 
 ### 第四步：创建并定义流水线
 
+1)在前面构建的pipeline下拉操作中选择 **「Edit Config」** ，进行进入pipeline编辑页
+
+![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/22-cicd-pipeline-edit.png)
+
+2)在 **「Edit Pipeline Configuration」** 中可以看到已经创建好了四个步骤，分别是
+
+* 从仓库获取代码
+* 运行编译/构建代码(可选，此案例为必须项)
+* 构建镜像并发布到私有仓库中
+* 从仓库中拉取镜像并部署到集群中
+
+![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/23-cicd-pipeline-editview.png)
+
+下面下面分别展示各步骤细节：
+
+* 选择pipeline步骤类型、代码版本和编译脚本
+
+![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/24-cicd-pipline-edit-run.png)
+
+* 选择构建与发布镜像选项，设置Dockerfile路径、镜像名称，勾选 **「Push image to remote repository」** ，下拉列表中选择前面设置好的滴滴云仓库地址
+
+![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/25-cicd-pipline-edit-publish.png)
+
+* 选择部署YAML类型，并设置部署配置文件的路径
+
+![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/26-cicd-pipline-edit-deploy.png)
+
+3)设置构建提醒方式
+
+![设置提醒](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/27-cicd-pipline-edit-notify.png)
+
+4)设置流水线自动构建方式
+
+![自动构建](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/28-cicd-pipline-edit-autobuild.png)
+
+![自动构建](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/29-cicd-pipline-edit-autobuild.png)
+
+
+> 本文为了让读者尽快成功体验自定义流水线的全流程，将案例代码、构建镜像的Dockerfile、用于部署的deployment.yaml都已经写好。您可以尝试根据自己的项目/代码编写合适的Dockerfile、deployment.yaml和pipeline流程
+
+
+### 第五步：手动构建
+
+* **「Pipelines」** 列表中选择前面设置的构建流水线，点击右边下拉选项中的 **「Run」**
+
+![自动构建](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/30-cicd-pipline-edit-run.png)
+
+* 选择构建分支
+
+![自动构建](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/31-cicd-pipline-edit-run.png)
+
+* 查看构建进度与详情
+
+![自动构建](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/32-cicd-pipline-edit-run.png)
+
+* 构建成功&构建日志
+
+![自动构建](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/33-cicd-pipline-edit-run.png)
+
+* 第一次构建会比较慢，后端会自动部署构建pipeline所必须的Jenkins引擎、Docker Registry和Minio,如下图
+
+![构建引擎](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/34-cicd-pipline-edit-engine.png)
+
+> 后续您的代码源有代码更新或版本更新时，Pipeline将根据您设置的自动构建策略自动发布新版本到集群应用中。
+
+* 进入滴滴云控制台可以看到，每自动构建一次，镜像版本也会同时发布一次到docker镜像仓库中
+
+![构建引擎](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/35-cicd-pipeline-images.png)
+
 
 ### 结论
 
+基于Kubernetes集群可以非常便利的完成代码拉取、代码编译/构建、docker镜像构建、docker镜像分发(发布到私有或公有镜像仓库)、应用部署(从仓库拉取镜像并在集群部署应用)，且可以根据您设置的自动构建策略完成自动化流程，参考本文步骤您可以同时构建多条pipeline同时自动化构建您的应用程序，而无需关心细节。
 
 ### CI/CD相关概念
 * 持续集成(Continuous Integration, CI):  代码合并，构建，部署，测试都在一起，不断地执行这个过程，并对结果反馈。
 * 持续部署(Continuous Deployment, CD):　部署到测试环境、预生产环境、生成环境。　
 * 持续部署(Continuous Delivery, CD):  将最终产品发布到生成环境、给用户使用。
+
+
+> 写在后面：据说完成应用发布只完成了整个产品或服务的一半甚至更少，后面将会有漫长的监控、运维与迭代过程，后续即将推出一系列监控与运维实践，此处先占坑并预留链接地址： **[多Kubernetes集群和多租户环境中Prometheus搭建和使用监控指南]https://github.com/anypm/anypm-kubernetes-tutorials-series/blob/master/how-to-create-use-prometheus-in-kubernetes-clusters.md**
+
+* 基于Prometheus的Kubernetes集群治标监控
+
+![监控](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/36-prometheus.png)
+
+
+* 基于Prometheus的Kubernetes节点指标监控
+
+![监控](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/37-prometheus.png)
+
+
+* 基于Grafana的Kubernetes集群
+
+![监控](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/38-grafana.png)
+
+
+
+
+尽情期待哦：）
+
+
+
+
+
