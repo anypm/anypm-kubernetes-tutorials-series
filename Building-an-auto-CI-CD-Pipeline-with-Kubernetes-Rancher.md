@@ -225,8 +225,7 @@
 ### Rancher-Pipelines环境变量
 
 环境变量名称 | 描述
-- | -
-
+:---- | :-----
 CICD_GIT_REPO_NAME | 代码仓库名称(取自Github组织名称)	
 
 
