@@ -222,6 +222,14 @@
 * 持续部署(Continuous Deployment, CD):　部署到测试环境、预生产环境、生成环境。　
 * 持续部署(Continuous Delivery, CD):  将最终产品发布到生成环境、给用户使用。
 
+### Rancher-Pipelines环境变量
+
+环境变量名称 | 描述
+- | -
+
+CICD_GIT_REPO_NAME | 代码仓库名称(取自Github组织名称)	
+
+
 
 > 写在后面：据说完成应用发布只完成了整个产品或服务的一半甚至更少，后面将会有漫长的监控、运维与迭代过程，后续即将推出一系列监控与运维实践，此处先占坑并预留链接地址： ** [《多Kubernetes集群和多租户环境中Prometheus搭建和使用监控指南》](https://github.com/anypm/anypm-kubernetes-tutorials-series/blob/master/how-to-create-use-prometheus-in-kubernetes-clusters.md)**
 
