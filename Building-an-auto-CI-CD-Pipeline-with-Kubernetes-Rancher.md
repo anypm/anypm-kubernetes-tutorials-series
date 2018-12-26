@@ -49,34 +49,44 @@
 
 #### 1.创建项目
 选择你的集群，然后在顶部菜单中选择 **「Projects/Namespaces」** ，输入 **「Project Name」** ，其他默认，点击 **「Create」** 即可创建集群下的项目，如下图：
+
 ![添加CICD示例项目](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/01-cicd-addproject.png)
 
 #### 2.设置代码源
 1)选择上一步创建的项目，顶部主菜单选择 **「Workloads」**，然后选择tab栏中的 **「Pipelines」**，点击 **「Configure Repositories」**，如下图：
+
 ![设置代码源](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/02-cicd-config-repo.png)
 
-2)**「Repositories」**页面中可以看到Rancher官方提供了三个示例代码，为了完整演示配置CI/CD流程，我们不用此处的示例代码，直接点击下方按钮 **「Authorize & Fetch Your Own Repositories」**，如下图
+2)**「Repositories」**页面中可以看到Rancher官方提供了三个示例代码，为了完整演示配置CI/CD流程，我们不用此处的示例代码，直接点击下方按钮 **「Authorize & Fetch Your Own Repositories」**，如下图:
+
 ![设置代码源](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/03-cicd-config-repo-auth01.png)
 
 3)页面会跳转到选择源代码平台的页面，如下图。此处我们选择 **「Github」** 平台(GitLab与Bitbucket步骤类似)。此处注意要记录下 **“Homepage URL”** 和 **“Authorization callback URL”**，以备Github中应用授权使用。点击下方 **「click here」** 链接新开一个页面跳转至github应用授权页面。
+
 ![设置代码源](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/04-cicd-config-repo-auth02.png)
 
-4)在Github平台的 **「OAuth Apps」** 页面中点击 **「Register a new application」**，如下图
+4)在Github平台的 **「OAuth Apps」** 页面中点击 **「Register a new application」**，如下图:
+
 ![注册app](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/04-cicd-config-repo-auth02.png)
 
 5)在**「Register a new application」** 自定义一个应用名称到 **"Application name"** ，在**“Homepage URL”** 和 **“Authorization callback URL”** 中填入 **“3)”** 对应的地址即可，点击 **「Register application」**。
+
 ![注册app2](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/06-cicd-config-repo-regnewapp02.png)
 
-6)记录Github生成 **“Client ID”** 和 **"Client Secret"**,如下图
+6)记录Github生成 **“Client ID”** 和 **"Client Secret"**,如下图:
+
 ![注册app3](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/07-cicd-config-repo-regnewapp03.png)
 
 7)回到Rancher设置「Pipelines」页面中填入Github生成的 **“Client ID”** 和 **"Client Secret"** ，点击 **「Authenticate」** 进入授权页面：
+
 ![注册app4](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/08-cicd-config-repo-regnewapp04.png)
 
 点击绿色按钮授权
+
 ![授权](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/09-cicd-config-repo-auth.png)
 
 输入Github密码完成授权
+
 ![授权](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/10-cicd-config-repo-authpwd.png)
 
 
@@ -85,12 +95,15 @@
 ![代码源列表](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/11-cicd-repo-open01.png)
 
 找到 **“rancher-pipeline-example-go.git”**，点击 **「Enable」** 激活代码源授权
+
 ![激活代码源授权](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/12-cicd-repo-open02.png)
 
 点击底部 **「Done」** 完成代码源授权
+
 ![激活代码源授权](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/13-cicd-repo-open03.png)
 
 9)**「Pipelines」** 列表中会自动生成一个构建流水线，如图
+
 ![构建管道](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/14-cicd-pipeline-list.png)
 
 
