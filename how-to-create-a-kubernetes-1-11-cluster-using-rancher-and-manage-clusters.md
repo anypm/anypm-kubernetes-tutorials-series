@@ -1,6 +1,6 @@
 # 使用Rancher创建Kubernetes集群并进行多集群可视化管理
 
-> 写在前面：本文是[《kubernetes tutorials》](https://github.com/anypm/kubernetes-tutorials-series)系列文章的第一篇，本文的一个重要目的是帮助您如何使用rancher从零开始搭建一个kubernetes集群，并初步了解多集群可视化管理。[《kubernetes tutorials》](https://github.com/anypm/kubernetes-tutorials-series)系列后续还会陆续推出更多相关系列文章详细介绍更丰富的kubernetes安装部署、集群管理实践与原理解析，尽情期待～**天才都会三个神操作 `Watching` & `Star` & `Fork`**
+> 写在前面：[《kubernetes tutorials》](https://github.com/anypm/kubernetes-tutorials-series) 系列文章旨在帮助您从入门到高阶逐步了解并掌握kubernetes技术栈的实操、理论和最佳实践。主题将包括Docker基础与实操、Kubernetes基础与实操、基于Kubernetes的应用部署(工作负载版与集群版)、基于Kubernetes的CI/CD、Kubernetes集群与应用监控、Kubernetes运维与最佳生产实践等，因为平时工作比较忙碌，尽量确保每周1～3篇相关文章，主题可能会比较随机，待全系列完成后再系统整理，尽情期待～ **天才都会三个神操作 `Watching` & `Star` & `Fork`**
 
 ## 介绍
 Kubernetes是容器集群管理系统，是一个开源的平台，可以实现容器集群的自动化部署、自动扩缩容、维护等功能。
