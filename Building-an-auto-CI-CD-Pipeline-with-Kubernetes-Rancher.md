@@ -31,21 +31,68 @@
 
 
 为完成CI/CD流水间自动构建与部署的操作，您还需要一个示例代码库和用于存放docker镜像的仓库：
-* 本文提供了简单的基于go语言的示例代码库，您可以直接Fork使用：[CI/CD示例代码](https://github.com/anypm/rancher-pipeline-example-go)
-* 本文的Docker镜像仓库使用的是滴滴云的镜像仓库，相关地址如下：[滴滴云容器镜像服务](https://app.didiyun.com/#/docker/repositories)
+* 本文提供了简单的基于go语言的示例代码库，您可以直接Fork使用： [CI/CD示例代码](https://github.com/anypm/rancher-pipeline-example-go)
+* 本文的Docker镜像仓库使用的是滴滴云的镜像仓库，相关地址如下： [滴滴云容器镜像服务](https://app.didiyun.com/#/docker/repositories)
 
-> 您也可以使用[Docker官方仓库](hub.docker.com)、[Quay](quay.io)或自建的私有仓库，
+> 您也可以使用 [Docker官方仓库](hub.docker.com) 、 [Quay](quay.io) 或自建的私有仓库，
 
 
 ### 第一步：搭建Kubernetes集群
 
 开始之前请确保已按上述**目标**中的资源要求准备好了服务器资源，可以是物理机、虚拟机或云主机，本文所有资源均为云主机。
-关于如何准备Docker环境并搭建Kubernetes集群，请参考[使用Rancher创建Kubernetes集群并进行多集群可视化管理](https://github.com/anypm/anypm-kubernetes-tutorials-series/blob/master/how-to-create-a-kubernetes-1-11-cluster-using-rancher-and-manage-clusters.md),本文将不再赘述。
+关于如何准备Docker环境并搭建Kubernetes集群，请参考 [使用Rancher创建Kubernetes集群并进行多集群可视化管理](https://github.com/anypm/anypm-kubernetes-tutorials-series/blob/master/how-to-create-a-kubernetes-1-11-cluster-using-rancher-and-manage-clusters.md) ,本文将不再赘述。
 
 完成此步骤后本文后续步骤将**默认您已经配置好一个Kubernetes集群**，含2个Etcd节点、2个控制(Controller)节点、2个工作(Worker)节点。
 
 
 ### 第二步：设置代码源
+
+#### 1.创建项目
+选择你的集群，然后在顶部菜单中选择 **「Projects/Namespaces」** ，输入 **「Project Name」** ，其他默认，点击 **「Create」** 即可创建集群下的项目，如下图：
+![添加CICD示例项目](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/01-cicd-addproject.png)
+
+#### 2.设置代码源
+1)选择上一步创建的项目，顶部主菜单选择 **「Workloads」**，然后选择tab栏中的 **「Pipelines」**，点击 **「Configure Repositories」**，如下图：
+![设置代码源](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/02-cicd-config-repo.png)
+
+2)**「Repositories」**页面中可以看到Rancher官方提供了三个示例代码，为了完整演示配置CI/CD流程，我们不用此处的示例代码，直接点击下方按钮 **「Authorize & Fetch Your Own Repositories」**，如下图
+![设置代码源](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/03-cicd-config-repo-auth01.png)
+
+3)页面会跳转到选择源代码平台的页面，如下图。此处我们选择 **「Github」** 平台(GitLab与Bitbucket步骤类似)。此处注意要记录下 **“Homepage URL”** 和 **“Authorization callback URL”**，以备Github中应用授权使用。点击下方 **「click here」** 链接新开一个页面跳转至github应用授权页面。
+![设置代码源](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/04-cicd-config-repo-auth02.png)
+
+4)在Github平台的 **「OAuth Apps」** 页面中点击 **「Register a new application」**，如下图
+![注册app](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/04-cicd-config-repo-auth02.png)
+
+5)在**「Register a new application」** 自定义一个应用名称到 **"Application name"** ，在**“Homepage URL”** 和 **“Authorization callback URL”** 中填入 **“3)”** 对应的地址即可，点击 **「Register application」**。
+![注册app2](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/06-cicd-config-repo-regnewapp02.png)
+
+6)记录Github生成 **“Client ID”** 和 **"Client Secret"**,如下图
+![注册app3](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/07-cicd-config-repo-regnewapp03.png)
+
+7)回到Rancher设置「Pipelines」页面中填入Github生成的 **“Client ID”** 和 **"Client Secret"** ，点击 **「Authenticate」** 进入授权页面：
+![注册app4](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/08-cicd-config-repo-regnewapp04.png)
+
+点击绿色按钮授权
+![授权](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/09-cicd-config-repo-auth.png)
+
+输入Github密码完成授权
+![授权](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/10-cicd-config-repo-authpwd.png)
+
+
+8)页面自动回到 **「Repositories」**，此时会自动拉取您在github上授权项目下所有的代码源，如图
+
+![代码源列表](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/11-cicd-repo-open01.png)
+
+找到 **“rancher-pipeline-example-go.git”**，点击 **「Enable」** 激活代码源授权
+![激活代码源授权](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/12-cicd-repo-open02.png)
+
+点击底部 **「Done」** 完成代码源授权
+![激活代码源授权](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/13-cicd-repo-open03.png)
+
+9)**「Pipelines」** 列表中会自动生成一个构建流水线，如图
+![构建管道](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/14-cicd-pipeline-list.png)
+
 
 
 ### 第三步：设置Docker仓库
