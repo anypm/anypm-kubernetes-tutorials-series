@@ -227,6 +227,14 @@
 环境变量名称 | 描述
 :---- | :-----
 CICD_GIT_REPO_NAME | 代码仓库名称(取自Github组织名称)	
+CICD_PIPELINE_NAME | Pipeline名称
+CICD_GIT_BRANCH | 本次触发的Git代码分支
+CICD_TRIGGER_TYPE | 触发构建的事件
+CICD_PIPELINE_ID | Pipeline的RancherID
+CICD_GIT_URL | Github代码库的URL
+CICD_EXECUTION_SEQUENCE | 构建的Pipeline编号
+CICD_EXECUTION_ID | Pipeline的执行编号
+CICD_GIT_COMMIT | 执行的Git提交ID
 
 
 
