@@ -21,7 +21,7 @@
 ### 目标
 
 使用Kubernetes容器集群构建CI/CD自动流水线，包括自动签出代码、执行代码、构建镜像、发布到仓库、将应用部署到集群等。
-容器集群包含以下资源
+本文中容器集群包含以下资源：
 * 1个Rancher Server节点：用于部署Rancher Server，通过该节点可以实现可视化多集群、跨云管理Kubernetes集群
 * 2个Etcd节点：存储主控制节点和工作节点之间的任务调度等数据信息
 * 2个控制(Controller)节点：部署Kunbernetes集群主控制节点，用于管理和监控Kubernetes其它的工作节点和存在状态信息。
@@ -29,7 +29,20 @@
 
 > 注意：Etcd、Controller和Worker节点均选择至少两台是为了模拟高可用控制节点和工作节点。配置推荐至少2核CPU、4GB内存、40GB存储、2M带宽，系统均为Ubuntu 16.04 LTS。为达到更好的效果，本文创建的5台云服务器配置均为4核CPU、8GB内存、200GB存储、5M带宽，系统选择Ubuntu 16.04 LTS。
 
-### 第一步：搭建kubernetes集群
+
+为完成CI/CD流水间自动构建与部署的操作，您还需要一个示例代码库和用于存放docker镜像的仓库：
+* 本文提供了简单的基于go语言的示例代码库，您可以直接Fork使用：[CI/CD示例代码](https://github.com/anypm/rancher-pipeline-example-go)
+* 本文的Docker镜像仓库使用的是滴滴云的镜像仓库，相关地址如下：[滴滴云容器镜像服务](https://app.didiyun.com/#/docker/repositories)
+
+> 您也可以使用[Docker官方仓库](hub.docker.com)、[Quay](quay.io)或自建的私有仓库，
+
+
+### 第一步：搭建Kubernetes集群
+
+开始之前请确保已按上述**目标**中的资源要求准备好了服务器资源，可以是物理机、虚拟机或云主机，本文所有资源均为云主机。
+关于如何准备Docker环境并搭建Kubernetes集群，请参考[使用Rancher创建Kubernetes集群并进行多集群可视化管理](https://github.com/anypm/anypm-kubernetes-tutorials-series/blob/master/how-to-create-a-kubernetes-1-11-cluster-using-rancher-and-manage-clusters.md),本文将不再赘述。
+
+完成此步骤后本文后续步骤将**默认您已经配置好一个Kubernetes集群**，含2个Etcd节点、2个控制(Controller)节点、2个工作(Worker)节点。
 
 
 ### 第二步：设置代码源
