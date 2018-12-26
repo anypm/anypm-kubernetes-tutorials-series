@@ -13,6 +13,11 @@
 
 ### 第二步：部署prometheus监控
 
+### 启用prometheus的另一种快捷方法
+
+```
+sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher:v2.2.0-alpha3
+```
 
 ### 第三步：prometheus使用指南
 
@@ -20,7 +25,7 @@
 ### 第四步：grafana使用指南
 
 
-### 启用prometheus的另一种快捷方法
+
 
 
 
