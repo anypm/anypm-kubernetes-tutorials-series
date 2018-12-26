@@ -1,4 +1,4 @@
-## 多Kubernetes集群和多租户环境中搭建和使用Prometheus监控指南
+## 多Kubernetes集群和多租户环境中Prometheus搭建和使用监控指南
 
 
 ### 介绍
