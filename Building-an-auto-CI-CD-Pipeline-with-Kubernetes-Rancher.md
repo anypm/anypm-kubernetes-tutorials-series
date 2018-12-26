@@ -1,5 +1,7 @@
 ## 使用Kubernetes构建基于高可用容器集群的全自动可视化CI/CD流水线实操指南
 
+> 写在前面：[《kubernetes tutorials》](https://github.com/anypm/kubernetes-tutorials-series) 系列文章旨在帮助您从入门到高阶逐步了解并掌握kubernetes技术栈的实操、理论和最佳实践。主题将包括Docker基础与实操、Kubernetes基础与实操、基于Kubernetes的应用部署(工作负载版与集群版)、基于Kubernetes的CI/CD、Kubernetes集群与应用监控、Kubernetes运维与最佳生产实践等，因为平时工作比较忙碌，尽量确保每周1～3篇相关文章，主题可能会比较随机，待全系列完成后再系统整理，尽情期待～ **天才都会三个神操作 `Watching` & `Star` & `Fork`**
+
 ### 介绍
 
 本文主要讲述使用Rancher构建好Kubernetes集群后，如何在Kebernetes集群中快速构全自动的CI/CD流水， 包括自动签出代码、执行代码、构建Docker镜像、将Docker镜像发布到仓库、从Docker仓库拉取镜像并部署到集群等。
