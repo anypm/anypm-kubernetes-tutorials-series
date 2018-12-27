@@ -238,7 +238,7 @@ CICD_GIT_COMMIT | 执行的Git提交ID
 
 
 
-> 写在后面：据说完成应用发布只完成了整个产品或服务的一半甚至更少，后面将会有漫长的监控、运维与迭代过程，后续即将推出一系列监控与运维实践，此处先占坑并预留链接地址： **[《多Kubernetes集群和多租户环境中Prometheus搭建和使用监控指南》](https://github.com/anypm/anypm-kubernetes-tutorials-series/blob/master/how-to-create-use-prometheus-in-kubernetes-clusters.md)**
+> 写在后面：据说完成应用发布只完成了整个产品或服务生命周期的一半甚至更少，后面将会有漫长的监控、运维与迭代过程，后续即将推出一系列监控与运维实践，此处先占坑并预留链接地址： **[《多Kubernetes集群和多租户环境中Prometheus搭建和使用监控指南》](https://github.com/anypm/anypm-kubernetes-tutorials-series/blob/master/how-to-create-use-prometheus-in-kubernetes-clusters.md)** 先欣赏几张Prometheus与Grafana监控容器集群的预览图
 
 * 基于Prometheus的Kubernetes集群治标监控
 
