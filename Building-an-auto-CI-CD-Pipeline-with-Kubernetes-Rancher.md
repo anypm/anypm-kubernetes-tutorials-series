@@ -57,7 +57,7 @@
 
 ![设置代码源](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/02-cicd-config-repo.png)
 
-2)**「Repositories」**页面中可以看到Rancher官方提供了三个示例代码，为了完整演示配置CI/CD流程，我们不用此处的示例代码，直接点击下方按钮 **「Authorize & Fetch Your Own Repositories」**，如下图:
+2) **「Repositories」** 页面中可以看到Rancher官方提供了三个示例代码，为了完整演示配置CI/CD流程，我们不用此处的示例代码，直接点击下方按钮 **「Authorize & Fetch Your Own Repositories」**，如下图:
 
 ![设置代码源](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/03-cicd-config-repo-auth01.png)
 
@@ -69,7 +69,7 @@
 
 ![注册app](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/04-cicd-config-repo-auth02.png)
 
-5)在**「Register a new application」** 自定义一个应用名称到 **"Application name"** ，在**“Homepage URL”** 和 **“Authorization callback URL”** 中填入 **“3)”** 对应的地址即可，点击 **「Register application」**。
+5)在 **「Register a new application」** 自定义一个应用名称到 **"Application name"** ，在**“Homepage URL”** 和 **“Authorization callback URL”** 中填入 **“3)”** 对应的地址即可，点击 **「Register application」**。
 
 ![注册app2](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/06-cicd-config-repo-regnewapp02.png)
 
@@ -102,7 +102,7 @@
 
 ![激活代码源授权](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/13-cicd-repo-open03.png)
 
-9)**「Pipelines」** 列表中会自动生成一个构建流水线，如图
+9) **「Pipelines」** 列表中会自动生成一个构建流水线，如图
 
 ![构建管道](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/14-cicd-pipeline-list.png)
 
@@ -154,21 +154,27 @@
 * 构建镜像并发布到私有仓库中
 * 从仓库中拉取镜像并部署到集群中
 
-![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/23-cicd-pipeline-editview.png)
+![配置流水线](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/23-cicd-pipeline-editview.png)
 
 下面下面分别展示各步骤细节：
 
 * 选择pipeline步骤类型、代码版本和编译脚本
 
-![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/24-cicd-pipline-edit-run.png)
+![流水线-编译代码](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/24-cicd-pipline-edit-run.png)
 
 * 选择构建与发布镜像选项，设置Dockerfile路径、镜像名称，勾选 **「Push image to remote repository」** ，下拉列表中选择前面设置好的滴滴云仓库地址
 
-![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/25-cicd-pipline-edit-publish.png)
+![流水线-创建镜像](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/25-cicd-pipline-edit-publish.png)
 
 * 选择部署YAML类型，并设置部署配置文件的路径
 
-![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/26-cicd-pipline-edit-deploy.png)
+![设置部署文件路径](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/26-cicd-pipline-edit-deploy.png)
+
+**注意：** 此处部署文件中的默认配置为笔者前面配置的 **滴滴云镜像仓库** 的配置名称(仓库的url、用户名和密码均在此名称配置下)，需要将此处的名称更改为您自己的配置，这样部署应用时才能正确从您的仓库中拉取镜像进行部署，如下图：
+
+![设置部署文件仓库地址](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/26-cicd-pipline-edit-deploy2.png)
+
+
 
 3)设置构建提醒方式
 
@@ -222,8 +228,23 @@
 * 持续部署(Continuous Deployment, CD):　部署到测试环境、预生产环境、生成环境。　
 * 持续部署(Continuous Delivery, CD):  将最终产品发布到生成环境、给用户使用。
 
+### Rancher-Pipelines环境变量
 
-> 写在后面：据说完成应用发布只完成了整个产品或服务的一半甚至更少，后面将会有漫长的监控、运维与迭代过程，后续即将推出一系列监控与运维实践，此处先占坑并预留链接地址： ** [《多Kubernetes集群和多租户环境中Prometheus搭建和使用监控指南》](https://github.com/anypm/anypm-kubernetes-tutorials-series/blob/master/how-to-create-use-prometheus-in-kubernetes-clusters.md)**
+环境变量名称 | 描述
+:---- | :-----
+CICD_GIT_REPO_NAME | 代码仓库名称(取自Github组织名称)	
+CICD_PIPELINE_NAME | Pipeline名称
+CICD_GIT_BRANCH | 本次触发的Git代码分支
+CICD_TRIGGER_TYPE | 触发构建的事件
+CICD_PIPELINE_ID | Pipeline的RancherID
+CICD_GIT_URL | Github代码库的URL
+CICD_EXECUTION_SEQUENCE | 构建的Pipeline编号
+CICD_EXECUTION_ID | Pipeline的执行编号
+CICD_GIT_COMMIT | 执行的Git提交ID
+
+
+
+> 写在后面：据说完成应用发布只完成了整个产品或服务生命周期的一半甚至更少，后面将会有漫长的监控、运维与迭代过程，后续即将推出一系列监控与运维实践，此处先占坑并预留链接地址： **[《多Kubernetes集群和多租户环境中Prometheus搭建和使用监控指南》](https://github.com/anypm/anypm-kubernetes-tutorials-series/blob/master/how-to-create-use-prometheus-in-kubernetes-clusters.md)** 先欣赏几张Prometheus与Grafana监控容器集群的预览图
 
 * 基于Prometheus的Kubernetes集群治标监控
 
