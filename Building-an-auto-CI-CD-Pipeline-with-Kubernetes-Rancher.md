@@ -154,21 +154,27 @@
 * 构建镜像并发布到私有仓库中
 * 从仓库中拉取镜像并部署到集群中
 
-![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/23-cicd-pipeline-editview.png)
+![配置流水线](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/23-cicd-pipeline-editview.png)
 
 下面下面分别展示各步骤细节：
 
 * 选择pipeline步骤类型、代码版本和编译脚本
 
-![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/24-cicd-pipline-edit-run.png)
+![流水线-编译代码](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/24-cicd-pipline-edit-run.png)
 
 * 选择构建与发布镜像选项，设置Dockerfile路径、镜像名称，勾选 **「Push image to remote repository」** ，下拉列表中选择前面设置好的滴滴云仓库地址
 
-![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/25-cicd-pipline-edit-publish.png)
+![流水线-创建镜像](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/25-cicd-pipline-edit-publish.png)
 
 * 选择部署YAML类型，并设置部署配置文件的路径
 
-![设置仓库](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/26-cicd-pipline-edit-deploy.png)
+![设置部署文件路径](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/26-cicd-pipline-edit-deploy.png)
+
+**注意：** 此处部署文件中的默认配置为笔者前面配置的 **滴滴云镜像仓库** 的配置名称(仓库的url、用户名和密码均在此名称配置下)，需要将此处的名称更改为您自己的配置，这样部署应用时才能正确从您的仓库中拉取镜像进行部署，如下图：
+
+![设置部署文件仓库地址](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/26-cicd-pipline-edit-deploy2.png)
+
+
 
 3)设置构建提醒方式
 
