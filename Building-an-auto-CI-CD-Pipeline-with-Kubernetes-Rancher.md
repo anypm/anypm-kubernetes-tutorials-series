@@ -57,7 +57,7 @@
 
 ![设置代码源](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/02-cicd-config-repo.png)
 
-2)**「Repositories」**页面中可以看到Rancher官方提供了三个示例代码，为了完整演示配置CI/CD流程，我们不用此处的示例代码，直接点击下方按钮 **「Authorize & Fetch Your Own Repositories」**，如下图:
+2) **「Repositories」** 页面中可以看到Rancher官方提供了三个示例代码，为了完整演示配置CI/CD流程，我们不用此处的示例代码，直接点击下方按钮 **「Authorize & Fetch Your Own Repositories」**，如下图:
 
 ![设置代码源](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/03-cicd-config-repo-auth01.png)
 
@@ -69,7 +69,7 @@
 
 ![注册app](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/04-cicd-config-repo-auth02.png)
 
-5)在**「Register a new application」** 自定义一个应用名称到 **"Application name"** ，在**“Homepage URL”** 和 **“Authorization callback URL”** 中填入 **“3)”** 对应的地址即可，点击 **「Register application」**。
+5)在 **「Register a new application」** 自定义一个应用名称到 **"Application name"** ，在**“Homepage URL”** 和 **“Authorization callback URL”** 中填入 **“3)”** 对应的地址即可，点击 **「Register application」**。
 
 ![注册app2](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/06-cicd-config-repo-regnewapp02.png)
 
@@ -102,7 +102,7 @@
 
 ![激活代码源授权](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/13-cicd-repo-open03.png)
 
-9)**「Pipelines」** 列表中会自动生成一个构建流水线，如图
+9) **「Pipelines」** 列表中会自动生成一个构建流水线，如图
 
 ![构建管道](https://github.com/anypm/kubernetes-tutorials-series/blob/master/cicd-images/14-cicd-pipeline-list.png)
 
