@@ -1,4 +1,4 @@
-# 如何在Ubuntu 16.04上使用Kubeadm创建Kubernetes 1.11集群
+# 如何在Ubuntu 16.04上使用Kubeadm创建Kubernetes集群
 
 ## 介绍
 Kubernetes是一个容器编排系统，可以大规模管理容器。Kubernetes最初由谷歌根据其在生产中运行容器的经验开发而成，是一个由世界各地开发者积极参与的社区开发并提供支持的开源平台。
